@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="prueba.css">
+  <title>Document</title>
+</head>
+<body>
+
+  <ul class="accordion">
+    <li class="accordion-item">
+      <h3 class="accordion-title">Instalaciones</h3>
+      <p class="accordion-content">Contenido sobre instalaciones</p>
+    </li>
+    <li class="accordion-item">
+      <h3 class="accordion-title">Reparaciones</h3>
+      <p class="accordion-content">Contenido sobre reparaciones</p>
+    </li>
+    <li class="accordion-item">
+      <h3 class="accordion-title">Mantenciones</h3>
+      <p class="accordion-content">Las mantenciones son acciones elementales para conservar y aumentar la vida útil de tu producto. Nuestro servicio especializado te ayuda con esta tarea, realizando mantenciones preventivas y correctivas de aires acondicionados, refrigeradores, secadoras y mucho más!!! consulta por tu producto.</p>
+    </li>
+  </ul>
+
+  <script>
+    // Get all accordion items
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    // Loop through each accordion item
+    accordionItems.forEach(item => {
+      const title = item.querySelector('.accordion-title');
+
+      // Add click event listener to title
+      title.addEventListener('click', () => {
+        // Close all other accordions
+        accordionItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            const content = otherItem.querySelector('.accordion-content');
+            content.style.maxHeight = null; // Reset max-height
+            otherItem.classList.remove('active'); // Remove active class
+          }
+        });
+
+        // Toggle the current accordion
+        const content = item.querySelector('.accordion-content');
+        if (item.classList.contains('active')) {
+          content.style.maxHeight = null; // Reset max-height
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+        }
+        item.classList.toggle('active'); // Toggle active class
+      });
+    });
+  </script>
+</body>
+</html>

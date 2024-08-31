@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reparaciones</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/index.css">
     <!-- Para los iconos del sitio web -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     
 
 </head>
+
+<script src="script.js"></script>
 <body>
     
     <header class="header">
@@ -18,84 +21,136 @@
             <a href="#" class="logo">logo</a>
             <input type="checkbox" id="menu"/>
             <label for="menu">
-                <img src="imagenes/menu.png" class="menu-icono" alt="menu">
+                <img src="css/imagenes/menu.png" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="index.html">Inicio</a></li>
                     <li><a href="#">Nosotros</a></li>
                     <li><a href="#">Servicios</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </nav>
         </div>
 
         <div class="header-content container">
             <div class="header-txt">
-                <h1>Centro de Reparación</h1>
+                <h1>Servicio Técnico</h1>
                 <h2>Linea Blanca</h2>
                 <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, laboriosam, nihil nisi reiciendis, ad est aut modi nam impedit quam veniam! Corrupti optio perspiciatis maxime eum aut, alias amet dolores?
+                    Confíe en nuestro servicio técnico especializado en reparación de línea blanca. Con más de 15 años de experiencia, estamos aquí para mantener sus electrodomésticos en perfectas condiciones.
                 </p>
-                <a href="#" class="btn-1">Informacion</a>
+                <a href="#" class="btn-1">Agenda aquí</a>
             </div>
             <di class="header-img">
-                <img src="imagenes/about.jpg" alt="sobre">
-            </div>
+                <img src="css/imagenes/incio.jpg" alt="sobre">
+            </div> 
         </div>
 
+        
+
     </header>
+
+
+    <!-- seccion de Servicios esta seria la seccion principal del sitio web -->
+    <main id="service" class="servicios">
+
+        <h2>Servicios de Reparación</h2>
+        <div class="servicios-content container">
+
+            <div class="servicio-1">
+                <img src="css/imagenes/img-servicios/lavadora.jpg" alt="">
+                <h3>Lavadoras</h3>
+                <p>¿Tu lavadora no funciona como antes? ¡Lo reparamos rapido y eficientemente!</p>
+            </div>
+
+            <div class="servicio-1">
+                <img src="css/imagenes/img-servicios/refrigerador.jpeg" alt="">
+                <h3>Refrigeradores</h3>
+                <p>¿Alimentos descompuestos? Reparamos tu refrigerador y restauramos la frescura</p>
+            </div>
+
+            <div class="servicio-1">
+                <img src="css/imagenes/img-servicios/aspiradora.jpeg" alt="">
+                <h3>Aspiradoras</h3>
+                <p>¡Suelos limpios! Contamos con repuestos de la mejor calidad para tu aspiradora</p>
+            </div>
+
+            
+            <div class="servicio-1">
+                <img src="css/imagenes/img-servicios/ventilador.jpg" alt="">
+                <h3>Ventiladores</h3>
+                <p>¡Refrescate sin preocupaciones! Reparamos todo tipo de Ventiladores</p>
+            </div>
+
+        </div>
+
+        <button onclick="location.href = 'formulario.html'" class="btn-agenda">Agenda aqui</button>
+        
+    </main>
+
+    <!-- seccion de garantizar -->
+     <section class="garantizar container">
+        <div class="garantizar-content container">
+            <div class="garantizar-1">
+                <i class="bi bi-house-check"></i>
+                <h3>Servicio a domicilio</h3>
+                <p>¡No esperes más! Contamos con serivicio a domicilio dentro de RM</p>
+            </div>
+            <div class="garantizar-1">
+                <i class="bi bi-person-gear"></i>
+                <h3>Técnico especializado</h3>
+                <p>Técnico certificado para un servicio de calidad</p>
+            </div>
+            <div class="garantizar-1">
+                <i class="bi bi-shield-check"></i>
+                <h3>Trabajo garantizado</h3>
+                <p>Calidad y respaldo en cada servicio ¡Tu satisfacción es prioridad!</p>
+            </div>
+        </div>
+     </section>
+
+     <!-- seccion desplegable -->
+    <section class="acordeon" id="se-ofrec¿e">
+    <div class="accordion-wrapper acordeon-dentro">
+     <ul class="accordion">
+        <h2>Se ofrece</h2>
+        <li class="accordion-item">
+          <h3 class="accordion-title">Instalaciones</h3>
+          <p class="accordion-content">Contenido sobre instalaciones</p>
+        </li>
+        <li class="accordion-item">
+          <h3 class="accordion-title">Reparaciones</h3>
+          <p class="accordion-content">Contenido sobre reparaciones</p>
+        </li>
+        <li class="accordion-item">
+          <h3 class="accordion-title">Mantenciones</h3>
+          <p class="accordion-content">Las mantenciones son acciones elementales para conservar y aumentar la vida útil de tu producto. Nuestro servicio especializado te ayuda con esta tarea, realizando mantenciones preventivas y correctivas de aires acondicionados, refrigeradores, secadoras y mucho más!!! consulta por tu producto.</p>
+        </li>
+      </ul>
+      <div class="accordion-img">
+        <img src="css/imagenes/incio.jpg" alt="">
+      </div>
+    </div>
+    </section>
+   
+
     <!-- seccion del about -->
     <section class="about container">
 
         <div class="about-img">
-            <img src="imagenes/sobre.avif" alt="about">
+            <img src="css/imagenes/about.jpg" alt="about">
         </div>
         <div class="about-txt">
-            <h2>Nosotros</h2>
+            <h2>Sobre nosotros</h2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero rem, ipsa reiciendis ratione, vitae dolorem voluptatem asperiores quis laudantium numquam quas libero itaque est, temporibus atque. Magnam vitae amet alias!
-            </p>
-            <br>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero rem, ipsa reiciendis ratione, vitae dolorem voluptatem asperiores quis laudantium numquam quas libero itaque est, temporibus atque. Magnam vitae amet alias!
+                En el Centro de Reparación Don Carlos, nos especializamos en brindar soluciones técnicas para la reparación y mantenimiento de electrodomésticos de línea blanca. Con más de 15 años de experiencia, hemos logrado consolidarnos como un servicio confiable en la comuna de Pudahuel. Nuestra misión es asegurar que cada cliente reciba un servicio de alta calidad, basado en la dedicación, el conocimiento técnico y el compromiso con la satisfacción del cliente. Nos enorgullece ser un referente en el sector, ofreciendo atención personalizada y resultados que hablan por sí mismos.
             </p>
         </div>
 
     </section>
 
-    <!-- seccion de Servicios esta seria la seccion principal del sitio web -->
-     <main class="servicios">
-
-        <h2>Servicios</h2>
-        <div class="servicios-content container">
-
-            <div class="servicio-1">
-                <i class="fa-sharp fa-solid fa-camera-retro"></i>
-                <h3>Reparaciones pequeñas</h3>
-            </div>
-
-            <div class="servicio-1">
-                <i class="fa-solid fa-cat"></i>
-                <h3>Lo que sea</h3>
-            </div>
-
-            <div class="servicio-1">
-                <i class="fa-sharp fa-solid fa-fan"></i>
-                <h3>Reparaciones grandes</h3>
-            </div>
-
-            
-            <div class="servicio-1">
-                <i class="fa-solid fa-cat"></i>
-                <h3>Lo que sea</h3>
-            </div>
-
-        </div>
-
-        <button onclick="location.href = 'formulario.php'" class="btn-agenda">Agenda aqui</button>
-        
-     </main>
+    
 
      <!-- parte del footer -->
       <footer class="footer">
@@ -126,6 +181,39 @@
             window.location.href = "http://localhost/sitioweb"
         }
       </script>
+
+
+<!-- SCRIPT PARA EL ACORDEON -->
+    <script>
+        // Get all accordion items
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        // Loop through each accordion item
+        accordionItems.forEach(item => {
+        const title = item.querySelector('.accordion-title');
+
+        // Add click event listener to title
+        title.addEventListener('click', () => {
+            // Close all other accordions
+            accordionItems.forEach(otherItem => {
+            if (otherItem !== item) {
+                const content = otherItem.querySelector('.accordion-content');
+                content.style.maxHeight = null; // Reset max-height
+                otherItem.classList.remove('active'); // Remove active class
+            }
+            });
+
+            // Toggle the current accordion
+            const content = item.querySelector('.accordion-content');
+            if (item.classList.contains('active')) {
+            content.style.maxHeight = null; // Reset max-height
+            } else {
+            content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+            }
+            item.classList.toggle('active'); // Toggle active class
+        });
+        });
+    </script>
 
 </body>
 </html>
