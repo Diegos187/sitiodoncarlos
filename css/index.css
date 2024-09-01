@@ -34,7 +34,8 @@ img{
     display: flex;
     align-items: center;
     position:relative; /* Necesario para posicionar el pseudoelemento */
-  }
+}
+
 
 .contact-header {
     padding: 150px 0 10px 0;
@@ -56,6 +57,19 @@ img{
    opacity: 0.2; /* Ajusta la opacidad aquí */
    z-index: -1; /* Coloca el pseudoelemento detrás del contenido */
 }
+
+.header-2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:40%;
+    background-image: url(imagenes/fondoooo.jpg);
+    background-size:cover;
+    opacity: 0.2; /* Ajusta la opacidad aquí */
+    z-index: -1; /* Coloca el pseudoelemento detrás del contenido */
+ }
 
 .menu{
     
@@ -137,6 +151,19 @@ img{
     border-radius: 15px;
 }
 
+.header-2 {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+  }
+
+.header-txt-2 h1{
+    line-height: 1;
+    color: #323232;
+    text-transform: uppercase;
+    font-size: 50px;
+}
+
 .btn-1 {
     display: inline-block;
     padding: 11px 25px;
@@ -155,6 +182,12 @@ img{
     background-color: #fafafa;
 }
 
+.servicios-2 {
+    padding: 40px 0 100px 0;
+    text-align: center;
+    background-color: #fafafa;
+}
+
 .servicios h2 {
     color: #323232;
     font-size: 50px;
@@ -167,13 +200,34 @@ img{
     justify-content: space-between;
 }
 
+.servicios-content-2 {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .servicio-1 {
     padding: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     flex-basis: calc(25% - 20px);
 }
 
+.servicio-2 {
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(30% - 20px);
+    border-radius: 10px;
+}
+
 .servicio-1 img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.servicio-2 img {
     width: 100%;
     height: 200px;
     margin-bottom: 15px;
@@ -322,6 +376,16 @@ img{
     display: flex;
 }
 
+.about-2 {
+    padding: 5px 0;
+    text-align: center;
+    background-color: #f0eded;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .about-img {
     width: 50%;
 }
@@ -346,6 +410,98 @@ img{
     text-align: justify;
     font-size: 16px;
     color: #818181;
+}
+
+.about-txt-2 {
+    width: 50%;
+    margin-right: 25px;
+}
+
+.about-txt-2 p{
+    margin-top: 40px;
+    margin-right: 20px;
+}
+
+.about-img-2{
+    width: 50%;
+}
+
+.about-img-2 img {
+    width: 280px; /* Ajusta este valor según tus necesidades */
+    height: 300px; /* Ajusta este valor según tus necesidades */
+    border-radius: 15px;
+    margin-top: 5px;
+}
+
+/* PARTE DE CONTACTO */
+
+.contacto {
+    padding: 30px 0 78px 0;
+    text-align: center;
+    background-color: #fafafa;
+}
+
+.contacto-1 {
+    padding: 40px 0 100px 0;
+    text-align: center;
+    background-color: #fafafa;
+}
+
+
+.contacto-content {
+    margin-top: 55px;
+    display: center;
+    justify-content: space-between;
+}
+
+
+.contacto-1 {
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(25% - 20px);
+}
+
+.contacto-1 {
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(30% - 20px);
+    border-radius: 10px;
+}
+
+.contacto-1 img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.contacto-1 img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.contacto-1 h1 {
+    font-size: 50px;
+}
+
+.contacto-1 p {
+    font-size: 25px;
+    color:#6e6e6e;
+}
+
+.contacto-1 i {
+    font-size: 34px;
+}
+
+.contacto h2 {
+    color: #323232;
+    font-size: 25px;
+    text-align: justify;
+    margin-left: 400px;
 }
 
 /* PARTE DE LAS MARCAS */
@@ -474,7 +630,9 @@ textarea {
     color: #02B1F4;
 }
 
-/* PARTE RESPONSIVA DEL SITIO */
+
+
+/*------------------- PARTE RESPONSIVA DEL SITIO -----------------------*/
 @media (max-width:991px) {
     .menu{
         padding: 20px;
@@ -531,6 +689,8 @@ textarea {
 
     
 
+    /* PARTE DE HEADER */
+
     .header {
         min-height: 0vh;
         padding: 80px 30px 50px 30px;
@@ -553,6 +713,10 @@ textarea {
     .header-img img {
         display: none;
     }
+
+
+
+    /* PARTE DE ABOUT */
 
     .about {
         padding: 30px;
@@ -582,6 +746,10 @@ textarea {
         color: #818181;
     }
 
+
+
+    /* PARTE DE SERVICIOS */
+
     .servicios {
         padding: 100px;
     }
@@ -603,7 +771,9 @@ textarea {
         object-fit: cover;
     }
 
-    /* Parte de se ofrece */
+
+
+    /* PARTE DE LO QUE SE OFRECE */
 
     .acordeon-dentro {
         margin: 0 30px 0 30px;
