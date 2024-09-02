@@ -1,40 +1,52 @@
 
+// -------------------------------------- DESPLAZAMIENTO SUAVE
+
 function smoothScroll(targetId) {
-const element = document.getElementById(targetId);
-if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-}
-}
+    const element = document.getElementById(targetId);
+    if (element) {
+      // Calcular la posición exacta del elemento
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+  
+      // Desplazarse suavemente a la posición
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    } else {
+      console.error(`Elemento con ID "${targetId}" no encontrado.`);
+    }
+  }
 
 
+  // ----------------- FUNCION DEL ACORDEON -----------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
-// Get all accordion items
+
 const accordionItems = document.querySelectorAll('.accordion-item');
 
-// Loop through each accordion item
+
 accordionItems.forEach(item => {
 const title = item.querySelector('.accordion-title');
 
-// Add click event listener to title
+
 title.addEventListener('click', () => {
-    // Close all other accordions
+    // CIERRA TODOS LOS ACORDEONES 
     accordionItems.forEach(otherItem => {
     if (otherItem !== item) {
         const content = otherItem.querySelector('.accordion-content');
-        content.style.maxHeight = null; // Reset max-height
-        otherItem.classList.remove('active'); // Remove active class
+        content.style.maxHeight = null; 
+        otherItem.classList.remove('active'); 
     }
     });
 
     // Toggle the current accordion
     const content = item.querySelector('.accordion-content');
     if (item.classList.contains('active')) {
-    content.style.maxHeight = null; // Reset max-height
+    content.style.maxHeight = null; 
     } else {
-    content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+    content.style.maxHeight = content.scrollHeight + 'px'; 
     }
-    item.classList.toggle('active'); // Toggle active class
+    item.classList.toggle('active');
 });
 });
 });

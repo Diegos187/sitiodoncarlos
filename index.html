@@ -12,11 +12,11 @@
     <script src="funciones.js"></script>
 </head>
 
-<script src="script.js"></script>
 <body>
     
     <header class="header">
-        <!-- Toda la parte del menu -->
+
+        <!-- ---------- TODO LA PARTE DEL MENU Y EL NAVBAR -------- -->
         <div class="menu container">
             <a href="#" class="logo">DC</a>
             <input type="checkbox" id="menu"/>
@@ -26,21 +26,21 @@
             <nav class="navbar">
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#" onclick="smoothScroll('nosotros');">Nosotros</a></li>
-                    <li><a href="#">Servicios</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="#" onclick="smoothScroll('nosotros-s');">Nosotros</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="#" onclick="smoothScroll('contact-s');">Contacto</a></li>
                 </ul>
             </nav>
         </div>
 
         <div class="header-content container">
             <div class="header-txt">
-                <h1>Servicio Técnico</h1>
+                <h1>Servicio Técnico DC</h1>
                 <h2>Linea Blanca</h2>
                 <p>
                     Confíe en nuestro servicio técnico especializado en reparación de línea blanca. Con más de 15 años de experiencia, estamos aquí para mantener sus electrodomésticos en perfectas condiciones.
                 </p>
-                <a href="#" class="btn-1">Agenda aquí</a>
+                <a href="formulario.html" class="btn-1">Agenda aquí</a>
             </div>
             <di class="header-img">
                 <img src="css/imagenes/incio.jpg" alt="sobre">
@@ -52,7 +52,7 @@
     </header>
 
 
-    <!-- seccion de Servicios esta seria la seccion principal del sitio web -->
+    <!-- ----------- SECCION PRINCPAL EN ESTE CASO LOS SERVICIOS --------- -->
     <main id="service" class="servicios">
 
         <h2>Servicios de Reparación</h2>
@@ -78,9 +78,9 @@
 
             
             <div class="servicio-1">
-                <img src="css/imagenes/img-servicios/ventilador.jpg" alt="">
-                <h3>Ventiladores</h3>
-                <p>¡Refrescate sin preocupaciones! Reparamos todo tipo de Ventiladores</p>
+                <img src="css/imagenes/img-servicios/secador.jpg" alt="">
+                <h3>Secadores</h3>
+                <p>¿Tu ropa no seca? ¡La arreglamos para que tu ropa seque como si estuviera nuevo!</p>
             </div>
 
         </div>
@@ -89,7 +89,7 @@
         
     </main>
 
-    <!-- seccion de garantizar -->
+    <!-- -------------SECCION DE GARANTIZAR ------------------- -->
      <section class="garantizar container">
         <div class="garantizar-content container">
             <div class="garantizar-1">
@@ -110,49 +110,57 @@
         </div>
      </section>
 
-     <!-- seccion desplegable -->
+
+
+     <!-- ------------ SECCION DE SE OFRECE DESPLEGABLE ------------------- -->
     <section class="acordeon" id="se-ofrec¿e">
     <div class="accordion-wrapper acordeon-dentro">
      <ul class="accordion">
         <h2>Se ofrece</h2>
         <li class="accordion-item">
           <h3 class="accordion-title">Instalaciones</h3>
-          <p class="accordion-content">Contenido sobre instalaciones</p>
+          <p class="accordion-content">Minimice las interrupciones en su hogar o negocio. Nuestro equipo técnico realiza instalaciones eficientes y sin complicaciones, permitiéndole disfrutar de sus nuevos electrodomésticos en el menor tiempo posible.</p>
         </li>
         <li class="accordion-item">
           <h3 class="accordion-title">Reparaciones</h3>
-          <p class="accordion-content">Contenido sobre reparaciones</p>
+          <p class="accordion-content">Experimente la tranquilidad de contar con un servicio técnico de confianza. Nos comprometemos a brindarle una solución rápida y efectiva a cualquier avería en sus electrodomésticos. Nuestro objetivo es superar sus expectativas y garantizar su completa satisfacción.</p>
         </li>
         <li class="accordion-item">
           <h3 class="accordion-title">Mantenciones</h3>
-          <p class="accordion-content">Las mantenciones son acciones elementales para conservar y aumentar la vida útil de tu producto. Nuestro servicio especializado te ayuda con esta tarea, realizando mantenciones preventivas y correctivas de aires acondicionados, refrigeradores, secadoras y mucho más. consulta por tu producto.</p>
+          <p class="accordion-content">Invierte en el cuidado de tus electrodomésticos. Nuestro servicio de mantenimiento preventivo te permite detectar y solucionar problemas a tiempo, evitando costosas reparaciones a futuro. Nuestros técnicos realizarán una revisión exhaustiva de tus equipos, limpiando componentes y ajustando configuraciones para garantizar un óptimo rendimiento.</p>
         </li>
       </ul>
       <div class="accordion-img">
-        <img src="css/imagenes/incio.jpg" alt="">
+        <img src="css/imagenes/ofrece.jpg" alt="">
       </div>
     </div>
     </section>
+
    
 
-    <!-- seccion del about -->
-    <section class="about container" id="nosotros">
+    <!-- ----------------SECCION DEL ABOUT ------------------- -->
+    <section class="about container" id="nosotros-s">
 
         <div class="about-img">
-            <img src="css/imagenes/about.jpg" alt="about">
+            <img src="css/imagenes/nosostros.png" alt="about">
         </div>
         <div class="about-txt">
             <h2>Sobre nosotros</h2>
             <p>
                 En el Centro de Reparación Don Carlos, nos especializamos en brindar soluciones técnicas para la reparación y mantenimiento de electrodomésticos de línea blanca. Con más de 15 años de experiencia, hemos logrado consolidarnos como un servicio confiable en la comuna de Pudahuel. Nuestra misión es asegurar que cada cliente reciba un servicio de alta calidad, basado en la dedicación, el conocimiento técnico y el compromiso con la satisfacción del cliente. Nos enorgullece ser un referente en el sector, ofreciendo atención personalizada y resultados que hablan por sí mismos.
+                <br><br>
+                En Don Carlos, creemos en la importancia de la honestidad, la responsabilidad y la excelencia en el servicio. Nos esforzamos por construir relaciones duraderas con nuestros clientes, basadas en la confianza y la transparencia. Nuestro objetivo es ser tu aliado en el cuidado de tus electrodomésticos, ofreciéndote soluciones prácticas y eficientes.
             </p>
         </div>
 
     </section>
 
-    <!-- SECCION DE CONTACTO -->
 
-    <section class="contacto">
+
+    <!-- -------------- SECCION DE CONTACTO  -------------------------->
+
+    <section class="contacto" id="contact-s">
+        <div class="contacto-background">
         <div class="contacto-content container">
 
             <div class="contacto-1">
@@ -160,9 +168,9 @@
                 <p>¡Comunicate con nosotros por los siguientes medios!</p>
                 <br>
 
-                <h2><i class="bi bi-envelope"> </i>Correo@gmail.com</h2>
-                <h2><i class="bi bi-whatsapp"> </i>+56 9 1234 5678</h2>
-                <h2><i class="bi bi-facebook"> </i>Nombre de facebook</h2>
+                <h2><i class="bi bi-envelope i-correo"> </i>Correo@gmail.com</h2>
+                <h2><i class="bi bi-whatsapp i-whatsapp"> </i>+56 9 6360 3466</h2>
+                <h2><i class="bi bi-facebook i-facebook"> </i>Nombre de facebook</h2>
                 <h2><i class="bi bi-telephone"> </i>+56 2 1234 6789</h2>
 
                 <br>
@@ -171,9 +179,12 @@
             </div>
 
         </div>
+        </div>
     </section>
 
-    <!-- MOSTRAR MARCAS -->
+
+
+    <!-- ------------------ MOSTRAR MARCAS ---------------------- -->
     <section class="marcas">
         <div class="marcas-content container">
             <div class="marcas-1">
@@ -183,7 +194,7 @@
                 <img src="css/imagenes/marcas/mademsa.png" alt="">
             </div>
             <div class="marcas-1">
-                <img src="css/imagenes/marcas/samsung.png" alt="">
+                <a href="https://www.samsung.com/cl/"><img src="css/imagenes/marcas/samsung.png" alt=""></a>
             </div>
             <div class="marcas-1">
                 <img src="css/imagenes/marcas/midea.png" alt="">
@@ -194,7 +205,7 @@
 
     
 
-     <!-- parte del footer -->
+     <!-- ----------------- PARTE DEL FOOTER ------------------------------- -->
       <footer class="footer">
 
         <div class="footer-content container">
@@ -205,10 +216,10 @@
 
             <div class="link">
                 <ul>
-                    <li><a href="index.php">Inicio</a></li>
-                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#" onclick="smoothScroll('nosotros-s');">Nosotros</a></li>
                     <li><a href="#">Servicios</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#" onclick="smoothScroll('contact-s');">Contacto</a></li>
                 </ul>
 
             </div>
@@ -218,54 +229,6 @@
       </footer>
    
 
-      <script>
-        function myFunction(){
-            window.location.href = "http://localhost/sitioweb"
-        }
-      </script>
-
-<!-- SCRIPT PARA DESPLAZAMIENTO SUAVE -->
-    <!-- <script>
-        function smoothScroll(targetId) {
-        const element = document.getElementById(targetId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-        }
-    </script> -->
-
-
-<!-- SCRIPT PARA EL ACORDEON -->
-    <!-- <script>
-        // Get all accordion items
-        const accordionItems = document.querySelectorAll('.accordion-item');
-
-        // Loop through each accordion item
-        accordionItems.forEach(item => {
-        const title = item.querySelector('.accordion-title');
-
-        // Add click event listener to title
-        title.addEventListener('click', () => {
-            // Close all other accordions
-            accordionItems.forEach(otherItem => {
-            if (otherItem !== item) {
-                const content = otherItem.querySelector('.accordion-content');
-                content.style.maxHeight = null; // Reset max-height
-                otherItem.classList.remove('active'); // Remove active class
-            }
-            });
-
-            // Toggle the current accordion
-            const content = item.querySelector('.accordion-content');
-            if (item.classList.contains('active')) {
-            content.style.maxHeight = null; // Reset max-height
-            } else {
-            content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
-            }
-            item.classList.toggle('active'); // Toggle active class
-        });
-        });
-    </script> -->
 
 </body>
 </html>
