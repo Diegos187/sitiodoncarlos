@@ -261,6 +261,10 @@ img{
     cursor: pointer;
 }
 
+         /*Form*/
+
+
+
 /* PARTE DE GARANTIZAR */
 
 .garantizar {
@@ -559,6 +563,35 @@ form h2 {
     position: relative;
 }
 
+/* PARTE DE FORMULARIO APARTE */
+.header-agendar {
+    
+    background-color: #fafafa;
+    padding: 15px 0 1px 0;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: #d4edda;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 /* hace referencia al icono  */
 .input-container > i {
     padding: 14px;
@@ -606,6 +639,7 @@ textarea {
     cursor: pointer;
 }
 
+
 /* PARTE DE FOOTER */
 
 .footer {
@@ -639,6 +673,21 @@ textarea {
     color: #02B1F4;
 }
 
+/* PARTE DE OPCIONES EN EL FORMULARIO */
+.option-c {
+    border: 2px solid #02B1F4;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+select {
+    font-size: 14px;
+    border: solid white;
+    width: 100%;
+    background: white;
+  }
+
+  
 
 
 /*------------------- PARTE RESPONSIVA DEL SITIO -----------------------*/
@@ -915,4 +964,3 @@ textarea {
 }
 
 
-/* PARTE DE FORMULARIO APARTE */
