@@ -592,6 +592,21 @@ form h2 {
     border-radius: 5px;
 }
 
+/* PARTE DE OPCIONES EN EL FORMULARIO */
+.option-c {
+    border: 2px solid #02B1F4;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+select {
+    font-size: 14px;
+    border: solid white;
+    width: 100%;
+    background: white;
+  }
+
+
 /* hace referencia al icono  */
 .input-container > i {
     padding: 14px;
@@ -673,21 +688,6 @@ textarea {
     color: #02B1F4;
 }
 
-/* PARTE DE OPCIONES EN EL FORMULARIO */
-.option-c {
-    border: 2px solid #02B1F4;
-    padding: 10px;
-    border-radius: 20px;
-}
-
-select {
-    font-size: 14px;
-    border: solid white;
-    width: 100%;
-    background: white;
-  }
-
-  
 
 
 /*------------------- PARTE RESPONSIVA DEL SITIO -----------------------*/

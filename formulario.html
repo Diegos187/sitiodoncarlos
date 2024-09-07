@@ -81,6 +81,7 @@
                 </select>
                 
             </div>
+            <p id="minPrice" style="font-weight: bold; color: #02B1F4;"></p>
 <br>
             <div class="input-container">
                 <label for="date">Fecha de la Cita</label>
@@ -125,6 +126,51 @@
         </div>
     </footer>
 
+
+    
+    <!-- SCRIPT PARA MOSTRAR PRECIO MINIMO -->
+    <script>
+        const serviceType = document.getElementById('service_type');
+        const product = document.getElementById('product');
+        const minPrice = document.getElementById('minPrice');
+    
+        const priceData = {
+          "reparacion": {
+            "refrigerador": 50000,
+            "lavadora": 35000,
+            "secadora": 40000,
+            "horno": 25000,
+            "microondas": 15000
+          },
+          "instalacion": {  
+            "refrigerador": 20000,
+            "lavadora": 15000,
+            // ... otros productos
+          },
+          "mantenimiento": {  
+            "refrigerador": 10000,
+            "lavadora": 8000 ,
+            // ... otros productos
+          }
+        };
+    
+        function updateMinPrice() {
+          const selectedService = serviceType.value;
+          const selectedProduct = product.value;
+    
+          if (selectedService && selectedProduct && priceData[selectedService] && priceData[selectedService][selectedProduct]) {
+            minPrice.textContent = `Costo mínimo desde: $${priceData[selectedService][selectedProduct]}`;
+          } else {
+            minPrice.textContent = "";
+          }
+        }
+    
+        serviceType.addEventListener('change', updateMinPrice);
+        product.addEventListener('change', updateMinPrice);
+    
+        // Call updateMinPrice initially to handle cases where the user starts with pre-selected options
+        updateMinPrice();
+      </script>
 
     <script>
         function myFunction(){
