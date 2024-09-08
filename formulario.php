@@ -39,9 +39,27 @@
     
         <form method="post" autocomplete="off">
             <div class="input-container">
-                <label for="name">Nombre y Apellido</label>
-                <input type="text" id="name" name="name" placeholder="Nombre y Apellido" required>
+                <label for="firstName">Nombre</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Nombre" required>
                 <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="input-container">
+                <label for="lastName">Apellido</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Apellido" required>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="input-container">
+                <label for="rut">RUT</label>
+                <input type="text" id="rut" name="rut" placeholder="Rut con guión (ej: 12345678-9)" required>
+                <i class="fa-solid fa-id-card"></i>
+            </div>
+
+            <div class="input-container">
+                <label for="address">Dirección</label>
+                <input type="text" id="address" name="address" placeholder="Calle, número, comuna" required>
+                <i class="fa-solid fa-map-marker-alt"></i>
             </div>
 
             <div class="input-container">
@@ -92,14 +110,11 @@
             </div>
 
 
-
-
-
-            <!-- <div class="input-container">
+            <div class="input-container">
                 <label for="time">Hora de la Cita</label>
                 <input type="time" id="time" name="time" required>
                 <i class="fa-solid fa-clock"></i>
-            </div>  -->
+            </div>
 
             <div class="input-container">
                 <label for="message">Detalles de la Cita</label>
@@ -148,11 +163,17 @@
           "instalacion": {  
             "refrigerador": 20000,
             "lavadora": 15000,
+            "secadora": 40000,
+            "horno": 25000,
+            "microondas": 15000
             // ... otros productos
           },
           "mantenimiento": {  
             "refrigerador": 10000,
             "lavadora": 8000 ,
+            "secadora": 40000,
+            "horno": 25000,
+            "microondas": 15000
             // ... otros productos
           }
         };
