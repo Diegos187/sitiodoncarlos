@@ -655,6 +655,46 @@ textarea {
 }
 
 
+/* PARTE DE INFORMACION DE PAGOS */
+
+.info-costo{
+    padding: 50px 0;
+    display: flex;
+}
+
+.costo-txt {
+    width: 100%;
+    margin-left: 25px;
+}
+
+.costo-txt h2 {
+    color: #323232;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.costo-txt p{
+    text-align: justify;
+    font-size: 16px;
+    color: #161616;
+}
+
+.costo-txt ul {
+    list-style-type: circle; /* Puedes cambiar a circle, square, etc. */
+    margin: 20px;
+    padding: 0;
+}
+
+.costo-txt li {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: justify;
+    list-style-type: circle;
+    margin-bottom: 10px;
+    color: #3b3b3b;
+
+}
+
 /* PARTE DE FOOTER */
 
 .footer {

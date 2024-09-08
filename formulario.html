@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Cita</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/index.css">
 
 
@@ -12,10 +13,10 @@
 <body>
     <header class="header-agendar">
         <div class="menu container">
-            <a href="#" class="logo">logo</a>
+            <a href="index.html" class="logo">DC</a>
             <input type="checkbox" id="menu"/>
             <label for="menu">
-                <img src="imagenes/menu.png" class="menu-icono" alt="menu">
+                <i class="bi bi-list"></i>
             </label>
             <nav class="navbar">
                 <ul>
@@ -23,6 +24,7 @@
                     <li><a href="index.html">Nosotros</a></li>
                     <li><a href="servicios.html">Servicios</a></li>
                     <li><a href="index.html">Contacto</a></li>
+                    <li><a href="info_pago.html">Sobre Costo-Servicio</a></li>
                 </ul>
             </nav>
         </div>
@@ -119,15 +121,16 @@
                 <ul>
                     <li><a href="index.php">Inicio</a></li>
                     <li><a href="about.html">Nosotros</a></li>
-                    <li><a href="services.html">Servicios</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
                     <li><a href="contact.html">Contacto</a></li>
+                    <li><a href="info_pago.html">Sobre Costo-Servicio</a></li>
                 </ul>
             </div>
         </div>
     </footer>
 
 
-    
+
     <!-- SCRIPT PARA MOSTRAR PRECIO MINIMO -->
     <script>
         const serviceType = document.getElementById('service_type');
@@ -168,7 +171,7 @@
         serviceType.addEventListener('change', updateMinPrice);
         product.addEventListener('change', updateMinPrice);
     
-        // Call updateMinPrice initially to handle cases where the user starts with pre-selected options
+
         updateMinPrice();
       </script>
 
