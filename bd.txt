@@ -1,0 +1,51 @@
+----------CREACION DE BASE DE DATOS---------
+CREATE DATABASE doncarlos;
+USE doncarlos;
+
+---------CREACION DE TABLAS---------------
+CREATE TABLE Servicio (
+  id_servicio INT PRIMARY KEY AUTO_INCREMENT,
+  tipo_servicio VARCHAR(100)
+);
+
+CREATE TABLE Producto (
+  id_producto INT PRIMARY KEY AUTO_INCREMENT,
+  tipo_producto VARCHAR(100)
+);
+
+CREATE TABLE Horario (
+  id_horario INT PRIMARY KEY AUTO_INCREMENT,
+  fecha DATE,
+  hora_disponible TIME
+);
+
+CREATE TABLE Formulario (
+  id_form INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100),
+  correo VARCHAR(100),
+  detalles TEXT,
+  id_servicio INT,
+  id_producto INT,
+  id_horario INT,
+  FOREIGN KEY (id_servicio) REFERENCES Servicio(id_servicio),
+  FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
+  FOREIGN KEY (id_horario) REFERENCES Horario(id_horario)
+);
+
+---------------INSERTAR DATOS-----------------
+---Datos de servicios ofrecidos---
+INSERT INTO Servicio (tipo_servicio) VALUES ('Instalación');
+INSERT INTO Servicio (tipo_servicio) VALUES ('Reparación');
+INSERT INTO Servicio (tipo_servicio) VALUES ('Mantención');
+
+---Datos de productos disponibles a realizar servicio---
+INSERT INTO Producto (tipo_producto) VALUES ('Refrigerador');
+INSERT INTO Producto (tipo_producto) VALUES ('Lavadora');
+INSERT INTO Producto (tipo_producto) VALUES ('Secadora');
+INSERT INTO Producto (tipo_producto) VALUES ('Horno');
+
+---Horarios disponible---
+INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '10:00:00');
+INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '12:00:00');
+INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '14:00:00');
+INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '16:00:00');
