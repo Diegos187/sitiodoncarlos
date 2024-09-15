@@ -1,14 +1,25 @@
+<?php
+// Incluir la conexión a la base de datos
+include('conexion.php');
+
+// Obtener los servicios y productos desde la base de datos
+$queryServicios = "SELECT * FROM Servicio";
+$resultServicios = mysqli_query($conex, $queryServicios);
+
+$queryProductos = "SELECT * FROM Producto";
+$resultProductos = mysqli_query($conex, $queryProductos);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Cita</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/index.css">
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery para el AJAX -->
 </head>
 <body>
     <header class="header-agendar">
@@ -32,175 +43,117 @@
         <div class="header-agendar container">
             <h1 class="">Agenda tu cita</h1>
         </div>
-
     </header>
-    
-    <section class="formulario container">
-    
-        <form method="post" autocomplete="off">
-            <div class="input-container">
-                <label for="firstName">Nombre</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Nombre" required>
-                <i class="fa-solid fa-user"></i>
-            </div>
 
-            <div class="input-container">
-                <label for="lastName">Apellido</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Apellido" required>
-                <i class="fa-solid fa-user"></i>
-            </div>
-
-            <div class="input-container">
-                <label for="rut">RUT</label>
-                <input type="text" id="rut" name="rut" placeholder="Rut con guión (ej: 12345678-9)" required>
-                <i class="fa-solid fa-id-card"></i>
-            </div>
-
-            <div class="input-container">
-                <label for="address">Dirección</label>
-                <input type="text" id="address" name="address" placeholder="Calle, número, comuna" required>
-                <i class="fa-solid fa-map-marker-alt"></i>
-            </div>
-
-            <div class="input-container">
-                <label for="phone">Teléfono Celular</label>
-                <input type="tel" id="phone" name="phone" placeholder="Teléfono Celular" required>
-                <i class="fa-solid fa-phone"></i>
-            </div>
-
-            <div class="input-container">
-                <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
-                <i class="fa-solid fa-envelope"></i>
-            </div>
-
-            <label for="service_type">Tipo de Servicio</label>
-            <div class="input-container option-c">
-
-                <select id="service_type" name="service_type" required>
-                  <option value="">Selecciona</option>
-                  <option value="instalacion">Instalación</option>
-                  <option value="reparacion">Reparación</option>
-                  <option value="mantenimiento">Mantenimiento</option>
-                </select>
-             
-              </div>
-              
-            <br>
-            <label for="product">Producto</label>
-            <div class="input-container option-c">
-
-                <select id="product" name="product" required>
-                  <option value="">Selecciona</option>
-                  <option value="refrigerador">Refrigerador</option>
-                  <option value="lavadora">Lavadora</option>
-                  <option value="secadora">Secadora</option>
-                  <option value="horno">Horno</option>  
-        
-                  <option value="microondas">Microondas</option>
-                </select>
-                
-            </div>
-            <p id="minPrice" style="font-weight: bold; color: #02B1F4;"></p>
-<br>
-            <div class="input-container">
-                <label for="date">Fecha de la Cita</label>
-                <input type="date" id="date" name="date" min="<?php echo date ('Y-m-d'); ?>" required>
-                <i class="fa-solid fa-calendar"></i>
-            </div>
-
-
-            <div class="input-container">
-                <label for="time">Hora de la Cita</label>
-                <input type="time" id="time" name="time" required>
-                <i class="fa-solid fa-clock"></i>
-            </div>
-
-            <div class="input-container">
-                <label for="message">Detalles de la Cita</label>
-                <textarea id="message" name="message" placeholder="Detalles de la cita" required></textarea>
-            </div>
-            
-
-            <input type="submit" name="send" class="btn" onlick="myFunction()">
-            
-        </form>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content container">
-            <div class="link">
-                <a href="" class="logo">logo</a>
-            </div>
-            <div class="link">
-                <ul>
-                    <li><a href="index.php">Inicio</a></li>
-                    <li><a href="about.html">Nosotros</a></li>
-                    <li><a href="servicios.html">Servicios</a></li>
-                    <li><a href="contact.html">Contacto</a></li>
-                    <li><a href="info_pago.html">Sobre Costo-Servicio</a></li>
-                </ul>
-            </div>
+<section class="formulario container">
+    <form action="procesar_formulario.php" method="post" autocomplete="off">
+        <div class="input-container">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+            <i class="fa-solid fa-user"></i>
         </div>
-    </footer>
+        <div class="input-container">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="input-container">
+            <label for="rut">RUT</label>
+            <input type="text" id="rut" name="rut" placeholder="RUT" required>
+            <i class="fa-solid bi-person-vcard-fill"></i>
+        </div>
+        <div class="input-container">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
+            <i class="fa-solid bi-geo-alt"></i>
+        </div>
+        <div class="input-container">
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" placeholder="Teléfono" required>
+            <i class="fa-solid fa-phone"></i>
+        </div>
+        <div class="input-container">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" placeholder="Correo" required>
+            <i class="fa-solid fa-envelope"></i>
+        </div>
+
+        <label for="servicio">Tipo de Servicio</label>
+        <div class="input-container option-c" style="margin-bottom: 20px;">
+        <select id="servicio" name="servicio" required>
+        <option>Selecciona el servicio</option>
+            <?php while($servicio = mysqli_fetch_assoc($resultServicios)) { ?>
+                
+                <option value="<?php echo $servicio['id_servicio']; ?>">
+                    <?php echo $servicio['tipo_servicio']; ?>
+                </option>
+            <?php } ?>
+        </select>
+        </div>
+
+        <label for="producto">Producto</label>
+        <div class="input-container option-c" style="margin-bottom: 20px;">
+        <select id="producto" name="producto" required>
+        <option>Selecciona el producto</option>
+            <?php while($producto = mysqli_fetch_assoc($resultProductos)) { ?>
+                
+                <option value="<?php echo $producto['id_producto']; ?>">
+                    <?php echo $producto['tipo_producto']; ?>
+                </option>
+            <?php } ?>
+        </select>
+        </div>
+
+        <div class="input-container">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" min="<?php echo date('Y-m-d'); ?>" required>
+            <i class="fa-solid fa-calendar"></i>   
+        </div>
 
 
+            <label for="horario">Hora Disponible</label>
+            <div class="input-container option-c" style="margin-bottom: 20px;">
+            <select id="horario" name="horario" required>
+                <option value="">Selecciona una fecha primero</option>
+            </select>
+        </div>
 
-    <!-- SCRIPT PARA MOSTRAR PRECIO MINIMO -->
-    <script>
-        const serviceType = document.getElementById('service_type');
-        const product = document.getElementById('product');
-        const minPrice = document.getElementById('minPrice');
-    
-        const priceData = {
-          "reparacion": {
-            "refrigerador": 50000,
-            "lavadora": 35000,
-            "secadora": 40000,
-            "horno": 25000,
-            "microondas": 15000
-          },
-          "instalacion": {  
-            "refrigerador": 20000,
-            "lavadora": 15000,
-            "secadora": 40000,
-            "horno": 25000,
-            "microondas": 15000
-            // ... otros productos
-          },
-          "mantenimiento": {  
-            "refrigerador": 10000,
-            "lavadora": 8000 ,
-            "secadora": 40000,
-            "horno": 25000,
-            "microondas": 15000
-            // ... otros productos
-          }
-        };
-    
-        function updateMinPrice() {
-          const selectedService = serviceType.value;
-          const selectedProduct = product.value;
-    
-          if (selectedService && selectedProduct && priceData[selectedService] && priceData[selectedService][selectedProduct]) {
-            minPrice.textContent = `Costo mínimo desde: $${priceData[selectedService][selectedProduct]}`;
-          } else {
-            minPrice.textContent = "";
-          }
-        }
-    
-        serviceType.addEventListener('change', updateMinPrice);
-        product.addEventListener('change', updateMinPrice);
-    
+        <div class="input-container">
+            <label for="detalles">Detalles</label>
+            <textarea id="detalles" name="detalles" placeholder="Detalles adicionales" required></textarea>
+        </div>
 
-        updateMinPrice();
-      </script>
+        <input type="submit" name="send" class="btn" value="Agendar Cita">
+    </form>
+</section>
 
-    <script>
-        function myFunction(){
-            window.location.href = "http://localhost/sitioweb"
-        }
-    </script>
+<script>
+// Cargar horarios disponibles al seleccionar la fecha
+$(document).ready(function() {
+    $('#fecha').change(function() {
+        var fechaSeleccionada = $(this).val();
+
+        $.ajax({
+            url: 'obtener_horarios.php',
+            method: 'GET',
+            data: { date: fechaSeleccionada },
+            success: function(data) {
+                var horarios = JSON.parse(data);
+                $('#horario').html(''); // Limpiar opciones anteriores
+                horarios.forEach(function(horario) {
+                    $('#horario').append('<option value="' + horario.id_horario + '">' + horario.hora_disponible + '</option>');
+                });
+            }
+        });
+    });
+});
+</script>
+
+<script>
+    function mostrarMensajeCita(mensaje) {
+    alert(mensaje); // Puedes reemplazar alert() por una función más personalizada para crear una ventana emergente con estilos CSS.
+}
+</script>
 
 </body>
 </html>

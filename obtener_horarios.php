@@ -1,20 +1,19 @@
 <?php
-include('conexion.php');
+include 'conexion.php';
 
-// Obtener la fecha seleccionada
-$fecha = $_POST['fecha'];
+if (isset($_GET['date'])) {
+    $fecha = $_GET['date'];
 
-// Consultar los horarios disponibles para la fecha seleccionada
-$queryHorarios = "SELECT * FROM Horario WHERE fecha = '$fecha' AND estado = 'disponible'";
-$resultHorarios = mysqli_query($conex, $queryHorarios);
+    $query = "SELECT id_horario, hora_disponible FROM Horario WHERE fecha='$fecha' AND estado='disponible'";
+    $resultado = mysqli_query($conex, $query);
 
-// Construir las opciones de horarios
-$horarios = "<option value=''>Seleccionar Horario</option>";
+    $horarios = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $horarios[] = $row;
+    }
 
-while ($row = mysqli_fetch_assoc($resultHorarios)) {
-    $horarios .= "<option value='" . $row['id_horario'] . "'>" . $row['hora_disponible'] . "</option>";
+    echo json_encode($horarios);
 }
 
-// Enviar los horarios de vuelta al cliente
-echo $horarios;
+mysqli_close($conex);
 ?>

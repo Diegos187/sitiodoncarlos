@@ -1,51 +1,63 @@
-----------CREACION DE BASE DE DATOS---------
+-- CREACIÓN DE LA BASE DE DATOS
 CREATE DATABASE doncarlos;
 USE doncarlos;
 
----------CREACION DE TABLAS---------------
+-- CREACIÓN DE TABLAS
+
+-- Tabla para los tipos de servicios ofrecidos
 CREATE TABLE Servicio (
-  id_servicio INT PRIMARY KEY AUTO_INCREMENT,
-  tipo_servicio VARCHAR(100)
+  id_servicio INT PRIMARY KEY AUTO_INCREMENT,  -- Clave primaria
+  tipo_servicio VARCHAR(100)                   -- Tipo de servicio (instalación, reparación, etc.)
 );
 
+-- Tabla para los tipos de productos (electrodomésticos)
 CREATE TABLE Producto (
-  id_producto INT PRIMARY KEY AUTO_INCREMENT,
-  tipo_producto VARCHAR(100)
+  id_producto INT PRIMARY KEY AUTO_INCREMENT,  -- Clave primaria
+  tipo_producto VARCHAR(100)                   -- Tipo de producto (refrigerador, lavadora, etc.)
 );
 
+-- Tabla para los horarios disponibles
 CREATE TABLE Horario (
-  id_horario INT PRIMARY KEY AUTO_INCREMENT,
-  fecha DATE,
-  hora_disponible TIME
+  id_horario INT PRIMARY KEY AUTO_INCREMENT,   -- Clave primaria
+  fecha DATE,                                  -- Fecha del horario disponible
+  hora_disponible TIME,                        -- Hora disponible para el servicio
+  estado ENUM('disponible', 'reservado') DEFAULT 'disponible'  -- Estado del horario
 );
 
+-- Tabla para almacenar los formularios de las citas
 CREATE TABLE Formulario (
-  id_form INT PRIMARY KEY AUTO_INCREMENT,
-  nombre VARCHAR(100),
-  correo VARCHAR(100),
-  detalles TEXT,
-  id_servicio INT,
-  id_producto INT,
-  id_horario INT,
-  FOREIGN KEY (id_servicio) REFERENCES Servicio(id_servicio),
-  FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
-  FOREIGN KEY (id_horario) REFERENCES Horario(id_horario)
+  id_form INT PRIMARY KEY AUTO_INCREMENT,      -- Clave primaria
+  nombre VARCHAR(100),                         -- Nombre del cliente
+  apellido VARCHAR(100),                       -- Apellido del cliente
+  rut VARCHAR(20),                             -- RUT del cliente
+  correo VARCHAR(100),                         -- Correo del cliente
+  direccion VARCHAR(255),                      -- Dirección del cliente
+  telefono VARCHAR(20),                        -- Teléfono del cliente
+  detalles TEXT,                               -- Detalles adicionales proporcionados por el cliente
+  id_servicio INT,                             -- Relación con el servicio
+  id_producto INT,                             -- Relación con el producto
+  id_horario INT,                              -- Relación con el horario
+  estado ENUM('pendiente', 'confirmado', 'cancelado') DEFAULT 'pendiente',  -- Estado de la cita
+  FOREIGN KEY (id_servicio) REFERENCES Servicio(id_servicio),  -- Clave foránea de Servicio
+  FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),  -- Clave foránea de Producto
+  FOREIGN KEY (id_horario) REFERENCES Horario(id_horario)      -- Clave foránea de Horario
 );
 
----------------INSERTAR DATOS-----------------
----Datos de servicios ofrecidos---
+-- INSERCIÓN DE DATOS
+
+-- Insertar los tipos de servicios
 INSERT INTO Servicio (tipo_servicio) VALUES ('Instalación');
 INSERT INTO Servicio (tipo_servicio) VALUES ('Reparación');
 INSERT INTO Servicio (tipo_servicio) VALUES ('Mantención');
 
----Datos de productos disponibles a realizar servicio---
+-- Insertar los tipos de productos
 INSERT INTO Producto (tipo_producto) VALUES ('Refrigerador');
 INSERT INTO Producto (tipo_producto) VALUES ('Lavadora');
 INSERT INTO Producto (tipo_producto) VALUES ('Secadora');
 INSERT INTO Producto (tipo_producto) VALUES ('Horno');
 
----Horarios disponible---
-INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '10:00:00');
-INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '12:00:00');
-INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '14:00:00');
-INSERT INTO Horario (fecha, hora_disponible) VALUES ('2024-09-22', '16:00:00');
+-- Insertar horarios disponibles
+INSERT INTO Horario (fecha, hora_disponible, estado) VALUES ('2024-09-22', '10:00:00', 'disponible');
+INSERT INTO Horario (fecha, hora_disponible, estado) VALUES ('2024-09-22', '12:00:00', 'disponible');
+INSERT INTO Horario (fecha, hora_disponible, estado) VALUES ('2024-09-22', '14:00:00', 'disponible');
+INSERT INTO Horario (fecha, hora_disponible, estado) VALUES ('2024-09-22', '16:00:00', 'disponible');
