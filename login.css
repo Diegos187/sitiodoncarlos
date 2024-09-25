@@ -1,0 +1,93 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #407778, #f6f6f6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+form {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 40px 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    width: 500px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    color: white;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #567ebf;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #496aa7;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.form-group {
+    text-align: left;
+    color: white;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
