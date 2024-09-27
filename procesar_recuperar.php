@@ -1,13 +1,14 @@
 <?php
 // Incluir el archivo de conexión a la base de datos
 include('conexion.php');
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
 
     // Verificar si el correo está registrado
     $sql = "SELECT * FROM login WHERE email = ?";
-    $stmt = $conex->prepare($sql);  // Aquí usamos la variable $conexion de 'conexion.php'
+    $stmt = $conex->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -30,12 +31,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $headers = "From: no-reply@doncarlos.com";
 
         if (mail($email, $subject, $message, $headers)) {
-            echo "Se ha enviado un enlace de restablecimiento a tu correo.";
+            $_SESSION['success'] = "Si el correo está registrado, te enviaremos un enlace de recuperación.";
         } else {
-            echo "Error al enviar el correo.";
+            $_SESSION['error'] = "Hubo un error al enviar el enlace de recuperación.";
         }
     } else {
-        echo "No existe una cuenta con ese correo.";
+        $_SESSION['success'] = "Si el correo está registrado, te enviaremos un enlace de recuperación.";
     }
+
+    header("Location: recuperar_contraseña.php");
+    exit();
 }
 ?>
