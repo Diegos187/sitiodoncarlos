@@ -6,7 +6,7 @@ $rut = $_POST['rut'];
 $nombre = $_POST['nombre'];
 $email = $_POST['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la contraseña
-$cargo = '1';  // Administrador
+$cargo = '2';  // Administrador
 $token_verificacion = bin2hex(random_bytes(50));  // Generar un token único
 $token_expiracion = date('Y-m-d H:i:s', strtotime('+1 hour'));  // Expiración del token (1 hora)
 

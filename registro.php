@@ -41,7 +41,7 @@ session_start();
             right: 10px;
             top: 33%;
             transform: translateY(-50%);
-            color: #ffffff;
+            color: black;
         }
 
         /* Posición relativa para el contenedor de la contraseña */
@@ -52,9 +52,31 @@ session_start();
     </style>
 </head>
 <body>
+
+    <!-- Barra de navegación -->
+    <header class="header-agendar">
+        <div class="menu container">
+            <a href="index.html" class="logo">DC</a>
+            <input type="checkbox" id="menu"/>
+            <label for="menu">
+                <i class="bi bi-list"></i>
+            </label>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="login.php">Iniciar Sesión</a></li>
+                    <li><a href="registro.php">Registrarse</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    
     <!-- Mensaje flotante -->
     <div id="mensajeFlotante" class="mensaje-flotante"></div>
-
+    
+    
     <form action="procesar_registro.php" method="POST" onsubmit="return validarFormulario()">
         <h2>Formulario de Registro</h2>
 
@@ -66,11 +88,11 @@ session_start();
         }
         ?>
 
-        <label for="rut">RUT:</label>
-        <input type="text" name="rut" id="rut" placeholder="Ingresa tu RUT" required>
+        <label for="rut">RUT (Sin puntos y con guión):</label>
+        <input type="text" name="rut" id="rut" placeholder="12345678-9" required>
         <p id="rutError" class="error" style="display: none;">Por favor, ingresa un RUT válido (ej: 12345678-9).</p>
 
-        <label for="nombre">Nombre:</label>
+        <label for="nombre">Nombre de usuario:</label>
         <input type="text" name="nombre" id="nombre" placeholder="Ingresa tu nombre" required>
 
         <label for="email">Correo:</label>
@@ -92,6 +114,7 @@ session_start();
         <p id="passwordError" class="error" style="display: none;">Las contraseñas no coinciden. Por favor, verifica.</p>
 
         <button type="submit">Registrarse</button>
+        <button onclick="window.location.href='login.php'" class="volver-btn">Volver</button> <!-- Botón Volver -->
     </form>
 
     <script>
