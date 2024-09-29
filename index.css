@@ -756,6 +756,8 @@ textarea {
         display: none;
         
         animation: slideDown 0.3s ease-in-out forwards;
+        animation: slideUp 0.3s ease-in-out forwards;
+        
       }
       
       @keyframes slideDown {

@@ -32,19 +32,49 @@ if (isset($_SESSION['user_id'])) {
             z-index: 1000;
         }
 
-        /* Estilo para el mensaje flotante de error */
         .mensaje-error {
             background-color: #f44336;
+        }
+
+        /* Estilos para el mensaje de error en el formulario */
+        .error {
+            color: red;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Mensaje flotante -->
+    <!-- Barra de navegación -->
+    <header class="header-agendar">
+        <div class="menu container">
+            <a href="index.html" class="logo">DC</a>
+            <input type="checkbox" id="menu"/>
+            <label for="menu">
+                <i class="bi bi-list"></i>
+            </label>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="login.php">Iniciar Sesión</a></li>
+                    <li><a href="registro.php">Registrarse</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
     <div id="mensajeFlotante" class="mensaje-flotante"></div>
 
+
+    <!-- Formulario de inicio de sesión -->
     <form method="POST" action="procesar_login.php">
         <h2>Iniciar Sesión</h2>
+
+        <!-- Mostrar el mensaje de error, si existe -->
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="error"><?php echo $_SESSION['error']; ?></div>
+            <?php unset($_SESSION['error']); // Limpiar el mensaje de error después de mostrarlo ?>
+        <?php endif; ?>
 
         <label for="email">Correo Electrónico:</label>
         <input type="email" name="email" id="email" placeholder="Email" required>
@@ -53,13 +83,12 @@ if (isset($_SESSION['user_id'])) {
         <input type="password" name="password" id="password" placeholder="Password" required>
 
         <div class="remember-me">
-            <label><input type="checkbox" name="remember"> Recuérdame</label>
             <a href="recuperar_contraseña.php">¿Olvidaste tu contraseña?</a>
         </div>
 
         <button type="submit">Iniciar Sesión</button>
 
-        <p style="color: white;">¿No tienes una cuenta? <a href="registro.php">Regístrate</a></p>
+        <p>¿No tienes una cuenta? <a href="registro.php">Regístrate</a></p>
     </form>
 
     <script>

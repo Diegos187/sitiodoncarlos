@@ -21,13 +21,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Guardar los datos de sesión
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['user_name'] = $row['nombre'];
-            header('Location: dashboard.php');  // Redirigir al dashboard
-            exit();
+            $_SESSION['user_cargo'] = $row['cargo'];  // Guardar el cargo en la sesión
+
+            // Verificar el cargo del usuario como cadena de texto
+            if ($row['cargo'] === 'administrador') {
+                // Si el cargo es 'administrador', redirigir al dashboard de administrador
+                header('Location: admin_dashboard.php');
+                exit(); // Asegúrate de salir después de la redirección
+            } elseif ($row['cargo'] === 'cliente') {
+                // Si el cargo es 'cliente', redirigir al dashboard de cliente
+                header('Location: dashboard.php');
+                exit(); // Asegúrate de salir después de la redirección
+            } else {
+                $_SESSION['error'] = "Cargo no reconocido.";
+                header('Location: login.php');
+                exit();
+            }
         } else {
-            echo "Contraseña incorrecta.";
+            $_SESSION['error'] = "Contraseña incorrecta.";
+            header('Location: login.php');
+            exit();
         }
     } else {
-        echo "El correo no está registrado o la cuenta no está verificada.";
+        $_SESSION['error'] = "El correo no está registrado o la cuenta no está verificada.";
+        header('Location: login.php');
+        exit();
     }
 
     $stmt->close();
