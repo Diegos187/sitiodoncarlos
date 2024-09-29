@@ -448,7 +448,7 @@ img{
 .contacto {
     padding: 30px 0 78px 0;
     text-align: center;
-    background-image: url(imagenes/contacto-background.jpg);
+    background-image: url(css/imagenes/contacto-background.jpg);
     background-size: cover;
     z-index: -1;
 }
@@ -563,12 +563,18 @@ form h2 {
     position: relative;
 }
 
+#precio-minimo {
+    display: none;
+    margin-bottom: 10px;
+  }
+  
+
 /* PARTE DE FORMULARIO APARTE */
 .header-agendar {
     
     background-color: #fafafa;
-    padding: 15px 0 1px 0;
-    min-height: 30vh;
+    padding: 15px 0 0px 0;
+    min-height: 25vh;
     display: flex;
     align-items: center;
     font-size: 20px;
