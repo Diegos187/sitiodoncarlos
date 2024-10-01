@@ -49,7 +49,7 @@ function insertarFechasYHoras($fecha_final) {
 }
 
 // Ejemplo de uso de la función
-$fecha_final = '2024-10-01'; // Puedes cambiar esta fecha al valor deseado
+$fecha_final = '2024-10-21'; // Puedes cambiar esta fecha al valor deseado
 insertarFechasYHoras($fecha_final);
 
 echo "Fechas y horas insertadas con éxito hasta $fecha_final.";
