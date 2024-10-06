@@ -1,3 +1,7 @@
+--VERIFICAR SI LOS EVENTOS ESTAN ACTIVADOS
+SHOW VARIABLES LIKE 'event_scheduler';
+
+
 -- CREACIÓN DE LA BASE DE DATOS
 CREATE DATABASE doncarlos;
 USE doncarlos;
@@ -117,3 +121,26 @@ VALUES (2, 1, 30000), (2, 2, 30000), (2, 3, 19000), (2, 4, 33000),
 INSERT INTO PrecioServicioProducto (id_servicio, id_producto, precio_minimo) 
 VALUES (3, 1, 25000), (3, 2, 30000), (3, 3, 20000), (3, 4, 30000), 
        (3, 5, 19000), (3, 6, 23000), (3, 7, 40000), (3, 8, 25000), (3, 9, 18000);
+
+INSERT INTO login (rut, nombre, email, password, cargo)
+VALUES ('12345678-9', 'Diego M', 'diegomarin939@outlook.es', '123', 'administrador');
+
+-- Eventos para eliminar tokens vencidos
+CREATE EVENT IF NOT EXISTS borrar_cuentas_no_verificadas
+ON SCHEDULE EVERY 30 SECOND
+DO
+  DELETE FROM login
+  WHERE verificado = 0
+  AND token_expiracion < NOW();
+
+CREATE EVENT IF NOT EXISTS borrar_password_expirados
+ON SCHEDULE EVERY 30 SECOND  
+DO
+  DELETE FROM password_resets
+  WHERE expira < NOW();
+
+-- En caso de no estar activado el tema de eventos
+SET GLOBAL event_scheduler = ON;
+
+
+

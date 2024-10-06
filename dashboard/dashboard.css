@@ -1,0 +1,407 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilos del contenedor principal */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    width: 100%;
+    background-color: #02B1F4;
+    padding: 15px 0 30px 0;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    position: fixed;
+    z-index: 1000;
+}
+
+header .menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0px;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+header nav {
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+header nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Estilos del contenido principal */
+main {
+    padding-top: 100px; /* Compensar la altura del header */
+    text-align: center;
+}
+
+main h1 {
+    margin-bottom: 20px;
+    font-size: 50px;
+    color: #333;
+}
+
+/* Historial de citas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+table th {
+    background-color: #02B1F4;
+    color: white;
+    font-weight: 700;
+    
+}
+
+table td {
+    font-size: 16px;
+}
+
+
+/* Pie de página fijo */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #02B1F4;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+footer .menu-footer {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px 20px;
+}
+
+footer .menu-footer a {
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+footer .menu-footer a:hover {
+    text-decoration: none;
+}
+
+/* Ventana modal y fondo difuminado */
+.modal {
+    display: none; /* Oculto por defecto */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    z-index: 1000; /* Asegurarse de que el modal esté encima de otros elementos */
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.modal label{
+    font-size: 16px;
+    color: #333;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 4% auto;
+    padding: 60px;
+    border: 1px solid #888;
+    width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+#main-content.blur {
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+.config-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+.config-icon:hover {
+    color: #ccc;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-btn:hover .dropdown-content {
+    display: block;
+  }
+
+  /* Estilo para los botones de acción como 'Reagendar', 'Cancelar', etc. */
+a.boton-accion {
+    background-color: #02B1F4; /* Color azul */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centrar texto */
+    display: inline-block; /* Para que el enlace se vea como botón */
+    font-weight: 600; /* Negrita */
+    font-size: 16px; /* Tamaño del texto */
+    transition: background-color 0.3s ease; /* Transición suave al hacer hover */
+}
+
+a.boton-accion:hover {
+    background-color: #0190C8; /* Color al hacer hover */
+}
+
+/* Eliminar el subrayado de los enlaces */
+a.boton-accion {
+    text-decoration: none;
+}
+
+.input-container {
+    
+    position: relative;
+}
+
+.input-container > i {
+    padding: 14px;
+    border-radius: 50%;
+    background-color: #02B1F4;
+    color: #FFFFFF;
+    position: absolute;
+    font-size: 20px;
+    top: 29px;
+    left: 5px;
+}
+
+/* afecta solo a lo de adentro del form */
+.input-container > input, textarea{
+    padding: 15px 15px 15px 40px;
+    width: 100%;
+    margin-bottom: 25px;
+    border-radius: 35px;
+    background-color: transparent;
+    border: 2px solid #02B1F4;
+    font-size: 16px;
+    outline: none;
+    color: #323232;
+}
+
+.option-c {
+    border: 2px solid #02B1F4;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    
+}
+
+.btn {
+    background-color: #02B1F4;
+    padding:  17px 30px;
+    width: 100%;
+    border: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+    color: #FFFFFF;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.modal-detalles {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-contenido-detalles {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.cerrar-detalles {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar-detalles:hover {
+    color: black;
+}
+
+.btn-detalles {
+    background-color: #02B1F4; /* Color azul */
+    color: white; /* Color del texto */
+    padding: 14px 20px; /* Espaciado interno */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centrar texto */
+    font-weight: 600; /* Negrita */
+    font-size: 16px; /* Tamaño del texto */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-detalles:hover {
+    background-color: #0190C8;
+    
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    font-size: 13px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    outline: none;
+}
+
+#mensaje-exito {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 16px;
+}
+
+
+.mensaje-error, .mensaje-exito {
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+}
+
+.mensaje-error {
+    color: #f44336; /* Rojo para mensajes de error */
+    font-weight: bold;
+}
+
+.mensaje-exito {
+    color: #4CAF50; /* Verde para el mensaje de éxito */
+    font-weight: bold;
+}
+
+
+.mensaje-reagendar {
+    margin: 15px 0;
+    font-size: 14px;
+    text-align: center;
+    display: none; /* Oculto por defecto */
+}
+
+.mensaje-reagendar.procesando {
+    color: #FFA500; /* Naranja para el mensaje de procesamiento */
+    display: block;
+}
+
+.mensaje-reagendar.exito {
+    color: #4CAF50; /* Verde para el mensaje de éxito */
+    display: block;
+}
+
+.mensaje-reagendar.error {
+    color: #f44336; /* Rojo para mensajes de error */
+    display: block;
+}

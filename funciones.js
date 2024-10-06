@@ -52,4 +52,3 @@ title.addEventListener('click', () => {
 });
 
 
-// MOSTRAR LOS PRECIOS MINIMOS
