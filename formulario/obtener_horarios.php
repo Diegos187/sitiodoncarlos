@@ -1,5 +1,5 @@
 <?php
-include 'conexion.php';
+include('../conexion.php');
 
 if (isset($_GET['date'])) {
     $fecha = $_GET['date'];

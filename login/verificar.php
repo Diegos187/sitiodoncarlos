@@ -1,5 +1,5 @@
 <?php
-include('conexion.php');
+include('../conexion.php');
 session_start(); // Iniciar sesión para manejar los mensajes flotantes
 
 // Obtener el token de la URL
@@ -16,7 +16,7 @@ if (mysqli_num_rows($result) == 1) {
         // Configurar un mensaje de éxito en la sesión
         $_SESSION['success'] = "Tu cuenta ha sido verificada exitosamente. Ahora puedes iniciar sesión.";
         // Redirigir a la página de login
-        header('Location: login.php');
+        header('Location: ./login.php');
         exit();
     } else {
         echo "Error al verificar la cuenta.";

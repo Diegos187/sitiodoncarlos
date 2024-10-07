@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('conexion.php');
+include('../conexion.php');
 
 // Verificar si el formulario fue enviado correctamente
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Verificar el cargo del usuario como cadena de texto
             if ($row['cargo'] === 'administrador') {
                 // Si el cargo es 'administrador', redirigir al dashboard de administrador
-                header('Location: admin_dashboard.php');
+                header('Location: ../dashboard/admin_dashboard.php');
                 exit(); // Asegúrate de salir después de la redirección
             } elseif ($row['cargo'] === 'cliente') {
                 // Si el cargo es 'cliente', redirigir al dashboard de cliente
-                header('Location: dashboard.php');
+                header('Location: ../dashboard/dashboard.php');
                 exit(); // Asegúrate de salir después de la redirección
             } else {
                 $_SESSION['error'] = "Cargo no reconocido.";
@@ -40,12 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         } else {
             $_SESSION['error'] = "Contraseña incorrecta.";
-            header('Location: login.php');
+            header('Location: ./login.php');
             exit();
         }
     } else {
         $_SESSION['error'] = "El correo no está registrado o la cuenta no está verificada.";
-        header('Location: login.php');
+        header('Location: ./login.php');
         exit();
     }
 

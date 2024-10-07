@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión a la base de datos
-include('conexion.php');
+include('../conexion.php');
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
 
         // Enviar el correo electrónico
-        $resetLink = "http://localhost/doncarlos/restablecer_contraseña.php?token=$token";
+        $resetLink = "http://localhost/doncarlos/login/restablecer_contraseña.php?token=$token";
         $subject = "Recuperación de Contraseña";
         $message = "Hola,\n\nHaz clic en el siguiente enlace para restablecer tu contraseña:\n$resetLink\n\nEste enlace expirará en 1 hora.";
         $headers = "From: no-reply@doncarlos.com";
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['success'] = "Si el correo está registrado, te enviaremos un enlace de recuperación.";
     }
 
-    header("Location: recuperar_contraseña.php");
+    header("Location: ./recuperar_contraseña.php");
     exit();
 }
 ?>

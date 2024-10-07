@@ -1,5 +1,5 @@
 <?php
-include('conexion.php');
+include('../conexion.php');
 
 $servicio = $_GET['servicio'];
 $producto = $_GET['producto'];

@@ -1,5 +1,5 @@
 <?php
-include('conexion.php');
+include('../conexion.php');
 
 // Obtener los datos del formulario
 $rut = $_POST['rut'];
@@ -22,7 +22,7 @@ session_start();
 if ($result->num_rows > 0) {
     // Si el RUT o el correo ya existen, redirigir de nuevo al formulario con un mensaje de error
     $_SESSION['error'] = "El correo electrónico o el RUT ya están registrados. Por favor, intenta con otro.";
-    header('Location: registro.php');
+    header('Location: ./registro.php');
     exit();
 } else {
     // Si no existen duplicados, insertar los datos en la tabla 'login'
@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
         // Enviar correo de verificación
         $subject = "Verificación de correo electrónico";
         $body = "Hola $nombre,\n\nHaz clic en el siguiente enlace para verificar tu cuenta:\n";
-        $body .= "http://localhost/doncarlos/verificar.php?token=$token_verificacion\n\n";
+        $body .= "http://localhost/doncarlos/login/verificar.php?token=$token_verificacion\n\n";
         $body .= "Este enlace expirará en 1 hora.\n\nSaludos,\nCentro Técnico DC";
         $headers = "From: diegomarin939@gmail.com";
 
@@ -66,7 +66,7 @@ if ($result->num_rows > 0) {
         $_SESSION['error'] = "Error al registrar al usuario.";
     }
 
-    header('Location: registro.php');
+    header('Location: ./registro.php');
     exit();
 }
 

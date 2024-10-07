@@ -13,7 +13,7 @@ if (isset($_GET['token'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restablecer Contraseña</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="./login.css">
     <style>
         .error-message {
             color: red;
@@ -53,15 +53,15 @@ if (isset($_GET['token'])) {
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="login.php">Iniciar Sesión</a></li>
-                    <li><a href="registro.php">Registrarse</a></li>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="./login.php">Iniciar Sesión</a></li>
+                    <li><a href="./registro.php">Registrarse</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <form action="procesar_restablecer.php" method="POST" onsubmit="return validarFormulario()">
+    <form action="./procesar_restablecer.php" method="POST" onsubmit="return validarFormulario()">
         <h2>Restablecer tu contraseña</h2>
         <input type="hidden" name="token" value="<?php echo $token; ?>">
         
@@ -80,7 +80,7 @@ if (isset($_GET['token'])) {
         <div class="error-message" id="error-message">Las contraseñas no coinciden.</div>
         
         <button type="submit">Restablecer contraseña</button>
-        <button type="button" onclick="window.location.href='login.php'" class="volver-btn">Volver</button>
+        <button type="button" onclick="window.location.href='./login.php'" class="volver-btn">Volver</button>
     </form>
 
     <script>

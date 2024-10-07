@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Contraseña</title>
-    <link rel="stylesheet" href="login.css"> <!-- Incluir el CSS existente -->
+    <link rel="stylesheet" href="./login.css"> <!-- Incluir el CSS existente -->
     <style>
         .mensaje-flotante {
             display: none;
@@ -28,16 +28,16 @@
     <!-- Barra de navegación -->
     <header class="header-agendar">
         <div class="menu container">
-            <a href="index.html" class="logo">DC</a>
+            <a href="../index.html" class="logo">DC</a>
             <input type="checkbox" id="menu"/>
             <label for="menu">
                 <i class="bi bi-list"></i>
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="login.php">Iniciar Sesión</a></li>
-                    <li><a href="registro.php">Registrarse</a></li>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="./login.php">Iniciar Sesión</a></li>
+                    <li><a href="./registro.php">Registrarse</a></li>
                 </ul>
             </nav>
         </div>
@@ -51,7 +51,7 @@
         <input type="email" name="email" id="email" placeholder="Ingresa tu correo" required>
 
         <button type="submit">Enviar enlace de recuperación</button>
-        <button onclick="window.location.href='login.php'" class="volver-btn">Volver</button> <!-- Botón Volver -->
+        <button onclick="window.location.href='./login.php'" class="volver-btn">Volver</button> <!-- Botón Volver -->
     </form>
 
     

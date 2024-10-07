@@ -1,6 +1,6 @@
 <?php
 // Incluir la conexión a la base de datos
-include('conexion.php');
+include('../conexion.php');
 
 // Obtener los servicios y productos desde la base de datos
 $queryServicios = "SELECT * FROM Servicio";
@@ -18,23 +18,23 @@ $resultProductos = mysqli_query($conex, $queryProductos);
     <title>Agendar Cita</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header class="header-agendar">
         <div class="menu container">
-            <a href="index.html" class="logo">DC</a>
+            <a href="../index.html" class="logo">DC</a>
             <input type="checkbox" id="menu"/>
             <label for="menu">
                 <i class="bi bi-list"></i>
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="index.html">Nosotros</a></li>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html">Nosotros</a></li>
                     <li><a href="servicios.html">Servicios</a></li>
-                    <li><a href="index.html">Contacto</a></li>
+                    <li><a href="../index.html">Contacto</a></li>
                     <li><a href="info_pago.html">Sobre Costo-Servicio</a></li>
                 </ul>
             </nav>

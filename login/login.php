@@ -4,7 +4,7 @@ session_start();
 // Verificar si ya hay una sesión activa
 if (isset($_SESSION['user_id'])) {
     // Si ya está logueado, redirigir al dashboard
-    header('Location: dashboard.php');
+    header('Location: ../dashboard/dashboard.php');
     exit();
 }
 ?>
@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="./login.css">
     <style>
         /* Estilos para el mensaje flotante */
         .mensaje-flotante {
@@ -48,16 +48,16 @@ if (isset($_SESSION['user_id'])) {
     <!-- Barra de navegación -->
     <header class="header-agendar">
         <div class="menu container">
-            <a href="index.html" class="logo">DC</a>
+            <a href="../index.html" class="logo">DC</a>
             <input type="checkbox" id="menu"/>
             <label for="menu">
                 <i class="bi bi-list"></i>
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="login.php">Iniciar Sesión</a></li>
-                    <li><a href="registro.php">Registrarse</a></li>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="./login.php">Iniciar Sesión</a></li>
+                    <li><a href="./registro.php">Registrarse</a></li>
                 </ul>
             </nav>
         </div>
@@ -67,7 +67,7 @@ if (isset($_SESSION['user_id'])) {
 
 
     <!-- Formulario de inicio de sesión -->
-    <form method="POST" action="procesar_login.php">
+    <form method="POST" action="./procesar_login.php">
         <h2>Iniciar Sesión</h2>
 
         <!-- Mostrar el mensaje de error, si existe -->
