@@ -19,20 +19,21 @@ include('../conexion.php');
 // Obtener las citas asociadas al usuario, ordenadas por estado
 $rut_cliente = $_SESSION['user_rut'];
 $query_citas = "
-    SELECT f.*, c.rut_cliente, s.tipo_servicio, p.tipo_producto, h.fecha, h.hora_disponible
+    SELECT f.*, c.rut_cliente, s.tipo_servicio, p.tipo_producto, h.fecha, h.hora_disponible, pr.monto, pr.comentario, pr.estado AS estado_presupuesto, pr.fecha_creacion, 
+           (SELECT COUNT(*) FROM Presupuesto WHERE id_form = f.id_form) AS num_presupuestos
     FROM Formulario f
     INNER JOIN Citas c ON f.id_form = c.id_form
     INNER JOIN Servicio s ON f.id_servicio = s.id_servicio
     INNER JOIN Producto p ON f.id_producto = p.id_producto
     INNER JOIN Horario h ON f.id_horario = h.id_horario
+    LEFT JOIN Presupuesto pr ON f.id_form = pr.id_form AND pr.fecha_creacion = (
+        SELECT MAX(fecha_creacion) FROM Presupuesto WHERE id_form = f.id_form
+    ) -- Obtener el presupuesto más reciente
     WHERE c.rut_cliente = ?
-    ORDER BY 
-        CASE 
-            WHEN f.estado = 'pendiente' THEN 1
-            WHEN f.estado = 'confirmado' THEN 2
-            WHEN f.estado = 'cancelado' THEN 3
-        END, h.fecha, h.hora_disponible
+    ORDER BY f.id_form DESC
+        
 ";
+
 $stmt = $conex->prepare($query_citas);
 $stmt->bind_param('s', $rut_cliente);
 $stmt->execute();
@@ -49,7 +50,6 @@ $result_citas = $stmt->get_result();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    
 
 <header>
     <div class="menu">
@@ -66,7 +66,7 @@ $result_citas = $stmt->get_result();
     <main>
         <h1>Bienvenido, <?php echo $_SESSION['user_name']; ?></h1>
         <h2>Historial de Citas</h2>
-
+        <div class="table-responsive">
         <table>
             <thead>
                 <tr>
@@ -77,7 +77,9 @@ $result_citas = $stmt->get_result();
                     <th>Hora</th>
                     <th>Estado</th>
                     <th>Detalles</th>
+                    <th>Presupuesto</th> <!-- Nueva columna para el presupuesto -->
                     <th>Acciones</th>
+                    <th>Mensajes</th>
                 </tr>
             </thead>
             <tbody>
@@ -108,19 +110,80 @@ $result_citas = $stmt->get_result();
                         ?>)">Ver Detalles</button>
                     </td>
                     <td>
-                        <?php if ($cita['estado'] == 'pendiente' || $cita['estado'] == 'confirmado') { ?>
+    <?php if ($cita['estado'] === 'cancelado') { ?>
+        <span>No disponible</span>
+    <?php } elseif (!empty($cita['monto'])) { ?>
+        <button class="btn-presupuesto" data-idform="<?php echo $cita['id_form']; ?>"
+                data-monto="<?php echo $cita['monto']; ?>"
+                data-comentario="<?php echo htmlspecialchars($cita['comentario'], ENT_QUOTES, 'UTF-8'); ?>"
+                data-estado="<?php echo $cita['estado_presupuesto']; ?>">
+            <?php 
+            if ($cita['estado_presupuesto'] === 'aceptado') {
+                echo 'Ver Presupuesto Aceptado';
+            } elseif ($cita['estado_presupuesto'] === 'rechazado') {
+                echo 'Ver Presupuesto Rechazado';
+            } else {
+                echo 'Ver Presupuesto';
+            }
+            ?>
+        </button>
+    <?php } else { ?>
+        <span>No hay presupuesto</span>
+    <?php } ?>
+</td>
+
+                    <td>
+                        <?php if ($cita['estado'] === 'finalizado') { ?>
+                            <span>Cita finalizada</span>
+                        <?php } elseif ($cita['estado'] === 'en proceso') { ?>
+                            <span>Servicio en proceso</span>
+                        <?php } elseif ($cita['estado'] === 'confirmado') { ?>
+                            <a href="cancelar.php?id_form=<?php echo $cita['id_form']; ?>" class="boton-accion">Cancelar</a>
+                        <?php } elseif ($cita['estado'] == 'pendiente' || $cita['estado'] == 'confirmado') { ?>
                             <button class="btn-detalles" onclick="abrirModalReagendar(<?php echo $cita['id_form']; ?>)">Reagendar</button> |
                             <a href="cancelar.php?id_form=<?php echo $cita['id_form']; ?>" class="boton-accion">Cancelar</a>
                         <?php } else { ?>
                             <span>Cita cancelada</span>
                         <?php } ?>
                     </td>
+<td>
+    <button class="btn-chat" data-idform="<?php echo $cita['id_form']; ?>" data-estado="<?php echo $cita['estado']; ?>">
+        Chat
+    </button>
+</td>
+
+
                 </tr>
             <?php } ?>
             </tbody>
         </table>
+        </div>
     </main>
 </div>
+
+<!-- Modal para ver el presupuesto -->
+<div id="modalPresupuesto" class="modal-detalles">
+    <div class="modal-contenido-detalles">
+        <span class="cerrar-presupuesto">&times;</span>
+        <h2>Presupuesto</h2>
+        
+        <!-- Contenedor para mensajes de estado (procesando, éxito, error) -->
+
+        
+        <p><strong>Monto:</strong> $<span id="presupuestoMonto"></span></p>
+        <p><strong>Comentario:</strong> <span id="presupuestoComentario"></span></p> <!-- Mostrar comentario -->
+        <p><strong>Estado:</strong> <span id="presupuestoEstado"></span></p>
+        <div id="mensaje-error" class="mensaje-reagendar"></div> 
+        <div id="presupuestoAcciones">
+            <button id="btnAceptarPresupuesto" class="btn" style="margin-bottom: 10px; margin-top:10px">Aceptar</button>
+            <button id="btnRechazarPresupuesto" class="btn">Rechazar</button>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 <!-- Modal para configuración de cuenta -->
@@ -162,8 +225,6 @@ $result_citas = $stmt->get_result();
                 <label for="nueva_password">Nueva contraseña:</label>
                 <input type="password" name="nueva_password" id="nueva_password" placeholder="Ingrese nueva contraseña">
             </div>
-            
-            <!-- Contenedor para mensajes de error y éxito -->
 
             <div id="mensaje-error" class="mensaje-reagendar"></div>
 
@@ -172,10 +233,6 @@ $result_citas = $stmt->get_result();
         </form>
     </div>
 </div>
-
-
-
-
 
 
 <!-- Modal para reagendar -->
@@ -218,7 +275,118 @@ $result_citas = $stmt->get_result();
     </div>
 </div>
 
+
+<!-- Modal para el chat -->
+<div id="modalChat" class="modal-chat">
+    <div class="modal-contenido-chat">
+        <span class="cerrar-chat">&times;</span>
+        <h2>Chat de la Cita #<span id="chatIdForm"></span></h2>
+        
+        <!-- Área de mensajes -->
+        <div id="chatMessages" class="chat-messages">
+            <!-- Aquí se cargarán los mensajes -->
+        </div>
+
+        <!-- Formulario para enviar un nuevo mensaje -->
+        <form id="formEnviarMensaje">
+            <input type="hidden" id="id_form_chat" name="id_form">
+            <input type="hidden" id="id_usuario_chat" name="id_usuario" value="<?php echo $_SESSION['user_id']; ?>">
+            <textarea id="mensaje_chat" name="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
+            <button type="submit" class="btn">Enviar</button>
+        </form>
+
+        <div id="mensaje-chat" class="mensaje-chat"></div>
+    </div>
+</div>
+
+
+
 <script src="./dashboard.js"></script>
+
+
+<script>
+// Abrir modal de presupuesto
+document.querySelectorAll('.btn-presupuesto').forEach(button => {
+    button.onclick = function() {
+        const monto = this.getAttribute('data-monto');
+        const estado = this.getAttribute('data-estado');
+        const comentario = this.getAttribute('data-comentario'); // Obtener comentario
+
+        document.getElementById('presupuestoMonto').textContent = monto;
+        document.getElementById('presupuestoEstado').textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
+        document.getElementById('presupuestoComentario').textContent = comentario || "Sin comentario"; // Mostrar comentario o mensaje por defecto
+
+        // Mostrar u ocultar botones dependiendo del estado del presupuesto
+        const presupuestoAcciones = document.getElementById('presupuestoAcciones');
+        if (estado === 'pendiente') {
+            presupuestoAcciones.style.display = 'block';
+            document.getElementById('btnAceptarPresupuesto').onclick = function() {
+                gestionarPresupuesto(button.getAttribute('data-idform'), 'aceptado');
+            };
+            document.getElementById('btnRechazarPresupuesto').onclick = function() {
+                gestionarPresupuesto(button.getAttribute('data-idform'), 'rechazado');
+            };
+        } else {
+            presupuestoAcciones.style.display = 'none';
+        }
+
+        // Mostrar el modal de presupuesto
+        document.getElementById('modalPresupuesto').style.display = 'block';
+    };
+});
+
+// Cerrar modal de presupuesto
+document.querySelector(".cerrar-presupuesto").onclick = function() {
+    document.getElementById("modalPresupuesto").style.display = "none";
+};
+
+
+// Función para gestionar aceptación o rechazo del presupuesto
+function gestionarPresupuesto(idForm, estado) {
+    const mensajeReagendar = document.getElementById('mensaje-error'); // Contenedor de mensajes
+    mensajeReagendar.textContent = "Procesando, por favor espere...";
+    mensajeReagendar.classList.remove("exito", "error", "procesando");
+    mensajeReagendar.classList.add("procesando");
+
+    $.ajax({
+        url: 'gestionar_presupuesto.php',
+        method: 'POST',
+        data: { id_form: idForm, estado: estado },
+        success: function(response) {
+            const result = JSON.parse(response);
+
+            if (result.success) {
+                mensajeReagendar.textContent = result.message;
+                mensajeReagendar.classList.remove("procesando");
+                mensajeReagendar.classList.add("exito");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000); // Recargar después de 2 segundos
+            } else {
+                mensajeReagendar.textContent = result.message;
+                mensajeReagendar.classList.remove("procesando");
+                mensajeReagendar.classList.add("error");
+            }
+        },
+        error: function() {
+            mensajeReagendar.textContent = "Error al gestionar el presupuesto.";
+            mensajeReagendar.classList.remove("procesando");
+            mensajeReagendar.classList.add("error");
+        }
+    });
+}
+
+
+
+window.onclick = function(event) {
+    const modalPresupuesto = document.getElementById("modalPresupuesto");
+    if (event.target == modalPresupuesto) {
+        modalPresupuesto.style.display = "none";
+    }
+};
+</script>
+
 <script>
 // Script para abrir el modal de reagendar
 var modalReagendar = document.getElementById("modalReagendar");
@@ -382,6 +550,132 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 });
 </script>
+
+<script>
+let intervaloMensajes;  // Variable para controlar el intervalo
+
+// Función para cargar los mensajes periódicamente
+function cargarMensajesPeriodicamente(idForm) {
+    // Limpiar cualquier intervalo anterior
+    clearInterval(intervaloMensajes);
+
+    // Definir el intervalo para hacer la solicitud cada 3 segundos
+    intervaloMensajes = setInterval(() => {
+        fetch(`obtener_mensajes.php?id_form=${idForm}`)
+        .then(response => response.json())
+        .then(data => {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';  // Limpiar los mensajes anteriores
+            data.mensajes.forEach(mensaje => {
+                const divMensaje = document.createElement('div');
+                divMensaje.classList.add(mensaje.esAdmin ? 'mensaje-admin' : 'mensaje-cliente');
+                divMensaje.innerHTML = `<strong>${mensaje.nombre}:</strong> ${mensaje.mensaje}`;
+                chatMessages.appendChild(divMensaje);
+            });
+
+            
+        });
+    }, 1000);  // Realizar la solicitud cada 1 segundos
+}
+
+// Función para verificar mensajes no leídos periódicamente
+function verificarMensajesNoLeidosPeriodicamente() {
+    setInterval(() => {
+        fetch('verificar_mensajes_no_leidos.php')  // Reutilizamos el mismo archivo
+        .then(response => response.json())
+        .then(data => {
+            data.formularios.forEach(formulario => {
+                const botonChat = document.querySelector(`.btn-chat[data-idform="${formulario.id_form}"]`);
+                if (botonChat) {
+                    // Si hay mensajes no leídos, cambiar el color a rojo, si no, cambiar a azul
+                    botonChat.style.backgroundColor = formulario.mensajes_no_leidos > 0 ? '#FF0000' : '#02B1F4';
+                }
+            });
+        })
+        .catch(error => console.error('Error verificando mensajes no leídos:', error));
+    }, 2000); // Verificar cada 5 segundos
+}
+
+const botonesChat = document.querySelectorAll('.btn-chat');
+botonesChat.forEach((boton) => {
+    boton.onclick = function() {
+        const idForm = this.getAttribute('data-idform');
+        const estadoCita = this.getAttribute('data-estado');  // Obtenemos el estado de la cita
+        document.getElementById('id_form_chat').value = idForm;
+        document.getElementById('chatIdForm').innerText = idForm;
+        document.getElementById('modalChat').style.display = 'block';
+        
+        // Si la cita está cancelada o finalizada, deshabilitamos el campo de texto y el botón
+        const mensajeTextarea = document.getElementById('mensaje_chat');
+        const botonEnviar = document.querySelector('#formEnviarMensaje button');
+        if (estadoCita === 'cancelado' || estadoCita === 'finalizado') {
+            mensajeTextarea.disabled = true;
+            mensajeTextarea.placeholder = 'Ya no se pueden enviar mensajes.';  // Muestra este mensaje en el campo de texto
+            botonEnviar.disabled = true;
+        } else {
+            mensajeTextarea.disabled = false;
+            mensajeTextarea.placeholder = 'Escribe tu mensaje...';  // Mensaje normal cuando se pueden enviar mensajes
+            botonEnviar.disabled = false;
+        }
+
+        // Marcar los mensajes del administrador como leídos al abrir el chat
+        fetch(`marcar_mensajes_como_leidos.php?id_form=${idForm}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Cargar los mensajes periódicamente después de marcar como leídos
+                cargarMensajesPeriodicamente(idForm);
+            }
+        });
+    };
+});
+
+
+
+// Detener el polling cuando se cierra el modal
+const cerrarModalChat = document.querySelector('.cerrar-chat');
+if (cerrarModalChat) {
+    cerrarModalChat.onclick = function() {
+        document.getElementById('modalChat').style.display = 'none';
+        clearInterval(intervaloMensajes);  // Detener el intervalo al cerrar el modal
+    };
+}
+
+
+// Función para enviar un nuevo mensaje
+const formEnviarMensaje = document.getElementById('formEnviarMensaje');
+if (formEnviarMensaje) {
+    formEnviarMensaje.onsubmit = function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const mensajeDiv = document.getElementById('mensaje-chat');
+
+        fetch('enviar_mensaje.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mensajeDiv.innerHTML = `<p style="color:green;">${data.message}</p>`;
+                // Cargar los mensajes inmediatamente después de enviar uno
+                cargarMensajesPeriodicamente(document.getElementById('id_form_chat').value);
+                document.getElementById('mensaje_chat').value = '';  // Limpiar el campo de texto
+            } else {
+                mensajeDiv.innerHTML = `<p style="color:red;">${data.message}</p>`;
+            }
+        });
+    };
+}
+
+
+// Función para verificar mensajes no leídos al cargar la página
+document.addEventListener('DOMContentLoaded', function () {
+    verificarMensajesNoLeidosPeriodicamente();  // Verificar mensajes no leídos cada 5 segundos
+});
+
+</script>
+
 
 
 

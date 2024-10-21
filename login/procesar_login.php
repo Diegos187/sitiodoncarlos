@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Guardar los datos de sesión
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['user_name'] = $row['nombre'];
+            $_SESSION['user_email'] = $row['email'];  // Agregar el email a la sesión
             $_SESSION['user_cargo'] = $row['cargo'];  // Guardar el cargo en la sesión
             $_SESSION['user_rut'] = $row['rut'];  // Guardar el RUT en la sesión
 

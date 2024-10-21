@@ -42,6 +42,7 @@ if (!empty($nuevo_nombre)) {
 }
 
 // Verificar si el usuario quiere cambiar el correo electrónico
+$correo_cambiado = false;  // Para saber si el correo fue cambiado
 if (!empty($nuevo_correo)) {
     // Verificar si los correos ingresados coinciden
     if ($nuevo_correo !== $confirmar_correo) {
@@ -63,6 +64,7 @@ if (!empty($nuevo_correo)) {
         $campos_a_actualizar[] = "email = ?";
         $parametros[] = $nuevo_correo;
         $tipos_parametros .= "s";
+        $correo_cambiado = true;  // Marcar que el correo ha cambiado
     }
     $stmt_check_email->close();
 }
@@ -106,6 +108,31 @@ if (count($campos_a_actualizar) > 0) {
         if (!empty($nuevo_correo)) {
             $_SESSION['user_email'] = $nuevo_correo;
         }
+
+        // Si el correo fue cambiado, enviar notificación por correo
+        if ($correo_cambiado) {
+            $correo_anterior = $usuario['email'];  // Guardar el correo anterior
+            $asunto = "Cambio de correo electrónico";
+            $mensaje = "
+                <h3>Estimado/a {$usuario['nombre']}</h3>
+                <p>Le informamos que su correo electrónico ha sido actualizado con éxito. A continuación, sus datos actualizados:</p>
+                <ul>
+                    <li><strong>Correo anterior:</strong> {$correo_anterior}</li>
+                    <li><strong>Nuevo correo:</strong> {$nuevo_correo}</li>
+                </ul>
+                <p>Si usted no realizó este cambio, por favor, póngase en contacto con nosotros de inmediato.</p>
+                <p>Gracias por utilizar nuestro servicio.</p>
+            ";
+
+            // Configurar el encabezado del correo
+            $headers = "From: Servicio Técnico <no-reply@doncarlos.com>\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+
+            // Enviar el correo de notificación
+            mail($nuevo_correo, $asunto, $mensaje, $headers);
+        }
+
         echo json_encode(['success' => true, 'message' => 'Datos actualizados correctamente. Recargando página...']);	
     } else {
         echo json_encode(['success' => false, 'message' => 'Error al actualizar los datos.']);

@@ -75,7 +75,9 @@ header nav a:hover {
 main {
     padding-top: 100px; /* Compensar la altura del header */
     text-align: center;
+    margin-bottom: 100px; /* Ajusta este valor para que sea igual o mayor que la altura del footer */
 }
+
 
 main h1 {
     margin-bottom: 20px;
@@ -83,7 +85,7 @@ main h1 {
     color: #333;
 }
 
-/* Historial de citas */
+/* Estilos básicos de la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -102,7 +104,6 @@ table th {
     background-color: #02B1F4;
     color: white;
     font-weight: 700;
-    
 }
 
 table td {
@@ -222,13 +223,13 @@ footer .menu-footer a:hover {
 a.boton-accion {
     background-color: #02B1F4; /* Color azul */
     color: white; /* Color del texto */
-    padding: 10px 20px; /* Espaciado interno */
+    padding: 14px 20px; /* Espaciado interno */
     border-radius: 30px; /* Bordes redondeados */
     text-align: center; /* Centrar texto */
-    display: inline-block; /* Para que el enlace se vea como botón */
     font-weight: 600; /* Negrita */
     font-size: 16px; /* Tamaño del texto */
-    transition: background-color 0.3s ease; /* Transición suave al hacer hover */
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
 a.boton-accion:hover {
@@ -338,6 +339,23 @@ a.boton-accion {
     
 }
 
+.btn-presupuesto{
+    background-color: #02B1F4; /* Color azul */
+    color: white; /* Color del texto */
+    padding: 14px 20px; /* Espaciado interno */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centrar texto */
+    font-weight: 600; /* Negrita */
+    font-size: 16px; /* Tamaño del texto */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-presupuesto:hover {
+    background-color: #0190C8;
+    
+}
+
 select {
     width: 100%;
     padding: 8px;
@@ -404,4 +422,152 @@ select {
 .mensaje-reagendar.error {
     color: #f44336; /* Rojo para mensajes de error */
     display: block;
+}
+
+.modal-chat {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    margin-top: 20px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-contenido-chat {
+    background-color: #fff;
+    margin: 8% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.chat-messages {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.mensaje-admin {
+    background-color: #b6e2ef;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.mensaje-cliente {
+    background-color: #c6eed3;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-align: right;
+}
+
+.mensaje-chat {
+    margin-top: 10px;
+    color: red;
+}
+
+
+
+.btn-chat {
+    background-color: #02B1F4; /* Color azul */
+    color: white; /* Color del texto */
+    padding: 14px 20px; /* Espaciado interno */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centrar texto */
+    font-weight: 600; /* Negrita */
+    font-size: 16px; /* Tamaño del texto */
+    border: none;
+    transition: background-color 0.3s ease;
+    align-items: center;
+}
+
+.btn-chat:hover {
+    background-color: #0190C8;
+}
+
+
+
+
+/* Hacer la tabla responsiva en pantallas pequeñas */
+@media (max-width: 968px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Ocultar los encabezados de la tabla */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    /* Mostrar cada fila como un bloque individual */
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 0;
+        padding-right: 0;
+        border-bottom: 1px solid #e0e0e0; /* Añadir una línea debajo de cada celda */
+        text-align: left;
+    }
+
+    td:before {
+        content: attr(data-label);
+        flex: 0 0 40%; /* El 40% del espacio lo ocupa el nombre de la columna */
+        text-align: left;
+        font-weight: bold;
+        color: #333;
+        border-right: 1px solid #ccc; /* Línea divisoria entre nombre y valor */
+        padding-right: 15px; /* Espacio extra a la derecha del nombre */
+    }
+
+    td:nth-of-type(1):before { content: "#Cita"; }
+    td:nth-of-type(2):before { content: "Servicio"; }
+    td:nth-of-type(3):before { content: "Producto"; }
+    td:nth-of-type(4):before { content: "Fecha"; }
+    td:nth-of-type(5):before { content: "Hora"; }
+    td:nth-of-type(6):before { content: "Estado"; }
+    td:nth-of-type(7):before { content: "Detalles"; }
+    td:nth-of-type(8):before { content: "Presupuesto"; }
+    td:nth-of-type(9):before { content: "Acciones"; }
+
+    .modal-contenido-chat {
+        background-color: #fff;
+        margin: 8% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 10px;
+        width: 80%;
+        margin-top: 10px;
+    }
+    .modal-chat {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        margin-top: 80px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        border-radius: 10px;
+        background-color: rgba(0,0,0,0.4);
+    }
 }

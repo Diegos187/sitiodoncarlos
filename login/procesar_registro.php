@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
         // Enviar correo de verificación
         $subject = "Verificación de correo electrónico";
         $body = "Hola $nombre,\n\nHaz clic en el siguiente enlace para verificar tu cuenta:\n";
-        $body .= "http://localhost/doncarlos/login/verificar.php?token=$token_verificacion\n\n";
+        $body .= "http://192.168.0.12/doncarlos/login/verificar.php?token=$token_verificacion\n\n";
         $body .= "Este enlace expirará en 1 hora.\n\nSaludos,\nCentro Técnico DC";
         $headers = "From: diegomarin939@gmail.com";
 

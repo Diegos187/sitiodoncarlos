@@ -52,23 +52,48 @@ CREATE TABLE login (
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
 -- Tabla para almacenar los formularios de las citas
 CREATE TABLE Formulario (
-  id_form INT PRIMARY KEY AUTO_INCREMENT,      -- Clave primaria
-  nombre VARCHAR(100),                         -- Nombre del cliente
-  apellido VARCHAR(100),                       -- Apellido del cliente
-  rut VARCHAR(20),                             -- RUT del cliente
-  correo VARCHAR(100),                         -- Correo del cliente
-  direccion VARCHAR(255),                      -- Dirección del cliente
-  telefono VARCHAR(20),                        -- Teléfono del cliente
-  detalles TEXT,                               -- Detalles adicionales proporcionados por el cliente
-  id_servicio INT,                             -- Relación con el servicio
-  id_producto INT,                             -- Relación con el producto
-  id_horario INT,                              -- Relación con el horario
-  estado ENUM('pendiente', 'confirmado', 'cancelado') DEFAULT 'pendiente',  -- Estado de la cita
+  id_form INT PRIMARY KEY AUTO_INCREMENT,                    -- Clave primaria
+  nombre VARCHAR(100),                                        -- Nombre del cliente
+  apellido VARCHAR(100),                                      -- Apellido del cliente
+  rut VARCHAR(20),                                            -- RUT del cliente
+  correo VARCHAR(100),                                        -- Correo del cliente
+  direccion VARCHAR(255),                                     -- Dirección del cliente
+  telefono VARCHAR(20),                                       -- Teléfono del cliente
+  detalles TEXT,                                              -- Detalles adicionales proporcionados por el cliente
+  id_servicio INT,                                            -- Relación con la tabla Servicio
+  id_producto INT,                                            -- Relación con la tabla Producto
+  id_horario INT,                                             -- Relación con la tabla Horario
+  estado ENUM('pendiente', 'confirmado', 'en proceso', 'finalizado', 'cancelado') DEFAULT 'pendiente',  -- Estado de la cita
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                  -- Fecha de creación del formulario
   FOREIGN KEY (id_servicio) REFERENCES Servicio(id_servicio),  -- Clave foránea de Servicio
   FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),  -- Clave foránea de Producto
-  FOREIGN KEY (id_horario) REFERENCES Horario(id_horario)    -- Clave foránea de Horario
+  FOREIGN KEY (id_horario) REFERENCES Horario(id_horario)      -- Clave foránea de Horario
+);
+
+-- Tabla para los mensajes de la cita (chat entre cliente y administrador)
+CREATE TABLE Mensajes (
+  id_mensaje INT PRIMARY KEY AUTO_INCREMENT,                  -- Clave primaria
+  id_form INT,                                                -- Relación con la tabla Formulario (cita)
+  id_usuario INT,                                             -- Relación con la tabla login (cliente o administrador)
+  mensaje TEXT NOT NULL,                                      -- Contenido del mensaje
+  fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,            -- Fecha y hora de envío del mensaje
+  leido TINYINT(1) DEFAULT 0,                                 -- Indicador de si el mensaje fue leído (0 = no, 1 = sí)
+  FOREIGN KEY (id_form) REFERENCES Formulario(id_form),        -- Clave foránea de Formulario
+  FOREIGN KEY (id_usuario) REFERENCES login(id)               -- Clave foránea de login
+);
+
+-- Tabla para los presupuestos
+CREATE TABLE Presupuesto (
+  id_presupuesto INT PRIMARY KEY AUTO_INCREMENT,        -- Clave primaria
+  id_form INT,                                          -- Relación con la tabla Formulario
+  monto DECIMAL(10,2) NOT NULL,                         -- Monto del presupuesto
+  comentario TEXT DEFAULT NULL,                         -- Comentarios adicionales
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- Fecha de creación del presupuesto
+  estado ENUM('pendiente', 'aceptado', 'rechazado') DEFAULT 'pendiente',  -- Estado del presupuesto
+  FOREIGN KEY (id_form) REFERENCES Formulario(id_form)  -- Clave foránea que referencia a Formulario
 );
 
 -- Tabla para conectar las citas con el cliente registrado (si se registra)
@@ -122,8 +147,8 @@ INSERT INTO PrecioServicioProducto (id_servicio, id_producto, precio_minimo)
 VALUES (3, 1, 25000), (3, 2, 30000), (3, 3, 20000), (3, 4, 30000), 
        (3, 5, 19000), (3, 6, 23000), (3, 7, 40000), (3, 8, 25000), (3, 9, 18000);
 
-INSERT INTO login (rut, nombre, email, password, cargo)
-VALUES ('12345678-9', 'Diego M', 'diegomarin939@outlook.es', '123', 'administrador');
+INSERT INTO login (rut, nombre, email, password, cargo, verificado) 
+VALUES ('12345678-9', 'Diego M', 'diegomarin939@outlook.es', '123', 'administrador', 1);
 
 -- Eventos para eliminar tokens vencidos
 CREATE EVENT IF NOT EXISTS borrar_cuentas_no_verificadas
