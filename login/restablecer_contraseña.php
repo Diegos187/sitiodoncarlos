@@ -4,6 +4,7 @@ if (isset($_GET['token'])) {
 } else {
     die('Token no válido.');
 }
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -15,16 +16,19 @@ if (isset($_GET['token'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./login.css">
     <style>
-        .error-message {
+        .error-message, .success-message {
             color: red;
             display: none;
             margin-top: 5px;
+        }
+        .success-message {
+            color: green;
         }
         .show-password {
             cursor: pointer;
             margin-left: 10px;
         }
-                /* Estilos para el ícono de ojo */
+        /* Estilos para el ícono de ojo */
         .eye-icon {
             cursor: pointer;
             position: absolute;
@@ -33,7 +37,6 @@ if (isset($_GET['token'])) {
             transform: translateY(-50%);
             color: black;
         }
-
         /* Posición relativa para el contenedor de la contraseña */
         .password-container {
             position: relative;
@@ -64,8 +67,8 @@ if (isset($_GET['token'])) {
     <form action="./procesar_restablecer.php" method="POST" onsubmit="return validarFormulario()">
         <h2>Restablecer tu contraseña</h2>
         <input type="hidden" name="token" value="<?php echo $token; ?>">
-        
-        <label for="password">Contraseña:</label>
+
+        <label for="password">Contraseña (Mín. 8 caracteres):</label>
         <div class="password-container">
             <input type="password" name="password" id="password" placeholder="Crea una contraseña" required>
             <span class="eye-icon" onclick="togglePasswordVisibility('password')"><i class="bi bi-eye"></i></span>
@@ -77,8 +80,23 @@ if (isset($_GET['token'])) {
             <span class="eye-icon" onclick="togglePasswordVisibility('confirm_password')"><i class="bi bi-eye"></i></span>
         </div>
 
-        <div class="error-message" id="error-message">Las contraseñas no coinciden.</div>
-        
+        <div class="error-message" id="error-message">
+            <?php
+            if (isset($_SESSION['error'])) {
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            }
+            ?>
+        </div>
+        <div class="success-message" id="success-message">
+            <?php
+            if (isset($_SESSION['success'])) {
+                echo $_SESSION['success'];
+                unset($_SESSION['success']);
+            }
+            ?>
+        </div>
+
         <button type="submit">Restablecer contraseña</button>
         <button type="button" onclick="window.location.href='./login.php'" class="volver-btn">Volver</button>
     </form>
@@ -98,7 +116,14 @@ if (isset($_GET['token'])) {
             var confirmPassword = document.getElementById('confirm_password').value;
             var errorMessage = document.getElementById('error-message');
 
+            if (password.length < 8) {
+                errorMessage.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                errorMessage.style.display = 'block';
+                return false;
+            }
+
             if (password !== confirmPassword) {
+                errorMessage.textContent = 'Las contraseñas no coinciden.';
                 errorMessage.style.display = 'block';
                 return false;
             } else {
@@ -106,6 +131,18 @@ if (isset($_GET['token'])) {
                 return true;
             }
         }
+
+        // Mostrar mensajes de éxito o error al cargar la página, si existen
+        window.onload = function() {
+            var errorMessage = document.getElementById('error-message');
+            var successMessage = document.getElementById('success-message');
+            if (errorMessage.textContent.trim() !== '') {
+                errorMessage.style.display = 'block';
+            }
+            if (successMessage.textContent.trim() !== '') {
+                successMessage.style.display = 'block';
+            }
+        };
     </script>
 </body>
 </html>

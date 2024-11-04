@@ -8,8 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+    // Verificar que las contraseñas coincidan y cumplan con la longitud mínima
     if ($password !== $confirm_password) {
-        die("Las contraseñas no coinciden.");
+        $_SESSION['error'] = "Las contraseñas no coinciden.";
+        header("Location: ./restablecer_contraseña.php?token=$token");
+        exit();
+    }
+    if (strlen($password) < 8) {
+        $_SESSION['error'] = "La contraseña debe tener al menos 8 caracteres.";
+        header("Location: ./restablecer_contraseña.php?token=$token");
+        exit();
     }
 
     // Verificar si el token es válido y no ha expirado
@@ -41,7 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ./login.php");
         exit();
     } else {
-        echo "El enlace de restablecimiento es inválido o ha expirado.";
+        $_SESSION['error'] = "El enlace de restablecimiento es inválido o ha expirado.";
+        header("Location: ./restablecer_contraseña.php?token=$token");
+        exit();
     }
 }
 ?>

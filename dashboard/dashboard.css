@@ -166,17 +166,11 @@ footer .menu-footer a:hover {
     align-items: center;
 }
 
-.modal-content {
-    background-color: #fff;
-    margin: 4% auto;
-    padding: 60px;
-    border: 1px solid #888;
-    width: 500px;
-    border-radius: 8px;
-    position: relative;
-}
 
-.close {
+
+
+
+.closePre {
     position: absolute;
     top: 10px;
     right: 20px;
@@ -186,8 +180,8 @@ footer .menu-footer a:hover {
     cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
+.closePre:hover,
+.closePre:focus {
     color: #000;
 }
 
@@ -301,16 +295,41 @@ a.boton-accion {
     background-color: rgba(0,0,0,0.4);
 }
 
-.modal-contenido-detalles {
+.modal-contenido-detalles,
+.modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     max-width: 500px;
+    border-radius: 10px;
 }
 
-.cerrar-detalles {
+.modal-content-confi {
+    background-color: #fff;
+    margin: 4% auto;
+    padding: 60px;
+    border: 1px solid #888;
+    width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.modal-content-cancelar {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.cerrar-detalles,
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -496,6 +515,74 @@ select {
     background-color: #0190C8;
 }
 
+.estado-pendiente {
+    color: #daa512;
+    font-weight: bold;
+}
+
+.estado-confirmado {
+    color: #02B1F4;
+    font-weight: bold;
+}
+
+.estado-en-proceso {
+    color: #49c44d;
+    font-weight: bold;
+}
+
+.estado-finalizado {
+    color: #a708d7;
+    font-weight: bold;
+}
+
+.estado-cancelado {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+.btn-agenda,
+.confirCan,
+.rechaCan {
+    background-color: #02B1F4; /* Color azul */
+    color: white; /* Color del texto */
+    padding: 14px 20px; /* Espaciado interno */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centrar texto */
+    font-weight: 600; /* Negrita */
+    font-size: 16px; /* Tamaño del texto */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-agenda:hover,
+.confirCan:hover,
+.rechaCan:hover {
+    background-color: #0190C8;
+}
+
+.cerrar-presupuesto {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+}
+
+.cerrar-presupuesto:hover {
+    color: black;
+}
+
+.cerrar-chat {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar-chat:hover {
+    color: black;
+}
 
 
 
@@ -514,9 +601,11 @@ select {
 
     /* Mostrar cada fila como un bloque individual */
     tr {
-        border: 1px solid #ccc;
+
         margin-bottom: 10px;
         padding: 10px;
+        background-color: #f9f9f9;
+        
     }
 
     td {
@@ -524,13 +613,12 @@ select {
         justify-content: space-between;
         padding-left: 0;
         padding-right: 0;
-        border-bottom: 1px solid #e0e0e0; /* Añadir una línea debajo de cada celda */
         text-align: left;
     }
 
     td:before {
         content: attr(data-label);
-        flex: 0 0 40%; /* El 40% del espacio lo ocupa el nombre de la columna */
+        flex: 0 0 30%; /* El 30% del espacio lo ocupa el nombre de la columna */
         text-align: left;
         font-weight: bold;
         color: #333;
@@ -547,6 +635,7 @@ select {
     td:nth-of-type(7):before { content: "Detalles"; }
     td:nth-of-type(8):before { content: "Presupuesto"; }
     td:nth-of-type(9):before { content: "Acciones"; }
+    td:nth-of-type(10):before { content: "Chat"; }
 
     .modal-contenido-chat {
         background-color: #fff;
@@ -570,4 +659,27 @@ select {
         border-radius: 10px;
         background-color: rgba(0,0,0,0.4);
     }
+
+    .modal-content {
+        width: 90%; 
+        padding: 20px; 
+    }
+
+    .modal-content-confi {
+        width: 90%; 
+        padding: 20px; 
+    }
+
+    .btn-presupuesto,
+    .btn-detalles,
+    .btn-chat,
+    .btn {
+        font-size: 15px; /* Tamaño del texto */
+    }
+
+    a.boton-accion {
+        font-size: 14px; /* Tamaño del texto */
+    }
+
+
 }

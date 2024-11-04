@@ -1,75 +1,145 @@
 <?php
 include('../conexion.php');
+session_start(); // Iniciar sesión para mostrar mensajes de éxito o error si es necesario
 
-// Obtener los datos del formulario
-$nombre = $_POST['nombre'];
-$apellido = $_POST['apellido'];
-$rut = $_POST['rut'];
-$direccion = $_POST['direccion'];
-$telefono = $_POST['telefono'];
-$correo = $_POST['correo'];
-$detalles = $_POST['detalles'];
-$servicio_id = $_POST['servicio'];
-$producto_id = $_POST['producto'];
-$horario_id = $_POST['horario'];
+// Sanitización y validación de los datos recibidos del formulario
+$nombre = htmlspecialchars(trim($_POST['nombre']));
+$apellido = htmlspecialchars(trim($_POST['apellido']));
+$rut = htmlspecialchars(trim($_POST['rut']));
+$direccion = htmlspecialchars(trim($_POST['direccion']));
+$telefono = filter_var(trim($_POST['telefono']), FILTER_SANITIZE_NUMBER_INT);
+$correo = filter_var(trim($_POST['correo']), FILTER_SANITIZE_EMAIL);
+$detalles = htmlspecialchars(trim($_POST['detalles']));
+$servicio_id = filter_var($_POST['servicio'], FILTER_VALIDATE_INT);
+$producto_id = filter_var($_POST['producto'], FILTER_VALIDATE_INT);
+$horario_id = filter_var($_POST['horario'], FILTER_VALIDATE_INT);
 
-// Consultar el nombre del servicio
-$queryServicio = "SELECT tipo_servicio FROM Servicio WHERE id_servicio = '$servicio_id'";
-$resultServicio = mysqli_query($conex, $queryServicio);
-$servicio = mysqli_fetch_assoc($resultServicio)['tipo_servicio'];
-
-// Consultar el nombre del producto
-$queryProducto = "SELECT tipo_producto FROM Producto WHERE id_producto = '$producto_id'";
-$resultProducto = mysqli_query($conex, $queryProducto);
-$producto = mysqli_fetch_assoc($resultProducto)['tipo_producto'];
-
-// Consultar la hora del horario
-$queryHorario = "SELECT hora_disponible FROM Horario WHERE id_horario = '$horario_id'";
-$resultHorario = mysqli_query($conex, $queryHorario);
-$horario = mysqli_fetch_assoc($resultHorario)['hora_disponible'];
-
-// Insertar datos en la tabla Formulario
-$query = "INSERT INTO Formulario (nombre, apellido, rut, direccion, telefono, correo, detalles, id_servicio, id_producto, id_horario) 
-          VALUES ('$nombre', '$apellido', '$rut', '$direccion', '$telefono', '$correo', '$detalles', '$servicio_id', '$producto_id', '$horario_id')";
-
-if (mysqli_query($conex, $query)) {
-    // Obtener el ID del formulario recién insertado
-    $id_form = mysqli_insert_id($conex);
-
-    // Verificar si el RUT ingresado ya está registrado en la tabla login
-    $query_verificar_rut = "SELECT * FROM login WHERE rut = '$rut'";
-    $result_rut = mysqli_query($conex, $query_verificar_rut);
-
-    if (mysqli_num_rows($result_rut) > 0) {
-        // Si el RUT está registrado en login, asociar la cita a la tabla Citas
-        $query_insert_cita = "INSERT INTO Citas (id_form, rut_cliente) VALUES ('$id_form', '$rut')";
-        mysqli_query($conex, $query_insert_cita);
-    }
-
-    // Actualizar el horario a 'reservado'
-    $queryUpdateHorario = "UPDATE Horario SET estado = 'reservado' WHERE id_horario = '$horario_id'";
-    mysqli_query($conex, $queryUpdateHorario);
-
-    // Enviar el correo electrónico de confirmación
-    $subject = "Siguiente paso de Cita";
-    $body = "Hola $nombre $apellido,\n\nGracias por agendar una cita con nosotros.\n\nDetalles de la cita:\n\nServicio: $servicio\nProducto: $producto\nFecha y hora: $horario\n\n ESTE ES SOLO UN MENSAJE DE PRUEBA \n\nNos pondremos en contacto con usted en el teléfono: $telefono.\n\nSaludos,\nCentro Técnico DC";
-    $headers = "From: diegomarin939@gmail.com";
-
-    // Envía el correo electrónico
-    if (mail($correo, $subject, $body, $headers)) {
-        echo "El correo electrónico se envió correctamente.";
-    } else {
-        echo "Hubo un error al enviar el correo electrónico.";
-    }
-
-    // Redirigir a la página de éxito
-    header('Location: cita_exitosa.html');
-    exit;
-} else {
-    // Redirigir a la página de error
-    header('Location: cita_mal.html');
+// Validación adicional de datos
+if (!$nombre || !$apellido || !$rut || !$direccion || !$telefono || !$correo || !$detalles || !$servicio_id || !$producto_id || !$horario_id) {
+    $_SESSION['error'] = "Todos los campos son obligatorios y deben estar en el formato correcto.";
+    header('Location: formulario.php');
     exit;
 }
 
-mysqli_close($conex);
+// Consultar el nombre del servicio usando consulta preparada
+$queryServicio = "SELECT tipo_servicio FROM Servicio WHERE id_servicio = ?";
+$stmtServicio = $conex->prepare($queryServicio);
+$stmtServicio->bind_param("i", $servicio_id);
+$stmtServicio->execute();
+$resultServicio = $stmtServicio->get_result();
+$servicio = $resultServicio->fetch_assoc()['tipo_servicio'];
+$stmtServicio->close();
+
+// Consultar el nombre del producto usando consulta preparada
+$queryProducto = "SELECT tipo_producto FROM Producto WHERE id_producto = ?";
+$stmtProducto = $conex->prepare($queryProducto);
+$stmtProducto->bind_param("i", $producto_id);
+$stmtProducto->execute();
+$resultProducto = $stmtProducto->get_result();
+$producto = $resultProducto->fetch_assoc()['tipo_producto'];
+$stmtProducto->close();
+
+// Consultar la hora del horario usando consulta preparada
+$queryHorario = "SELECT hora_disponible FROM Horario WHERE id_horario = ?";
+$stmtHorario = $conex->prepare($queryHorario);
+$stmtHorario->bind_param("i", $horario_id);
+$stmtHorario->execute();
+$resultHorario = $stmtHorario->get_result();
+$horario = $resultHorario->fetch_assoc()['hora_disponible'];
+$stmtHorario->close();
+
+// Iniciar una transacción
+$conex->begin_transaction();
+
+try {
+    // Insertar datos en la tabla Formulario usando consulta preparada
+    $query = "INSERT INTO Formulario (nombre, apellido, rut, direccion, telefono, correo, detalles, id_servicio, id_producto, id_horario) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmtInsert = $conex->prepare($query);
+    $stmtInsert->bind_param("sssssssiii", $nombre, $apellido, $rut, $direccion, $telefono, $correo, $detalles, $servicio_id, $producto_id, $horario_id);
+
+    if ($stmtInsert->execute()) {
+        // Obtener el ID del formulario recién insertado
+        $id_form = $conex->insert_id;
+
+        // Verificar si el RUT ingresado ya está registrado en la tabla login usando consulta preparada
+        $query_verificar_rut = "SELECT * FROM login WHERE rut = ?";
+        $stmtVerificarRUT = $conex->prepare($query_verificar_rut);
+        $stmtVerificarRUT->bind_param("s", $rut);
+        $stmtVerificarRUT->execute();
+        $resultRUT = $stmtVerificarRUT->get_result();
+
+        if ($resultRUT->num_rows > 0) {
+            // Si el RUT está registrado en login, asociar la cita a la tabla Citas usando consulta preparada
+            $query_insert_cita = "INSERT INTO Citas (id_form, rut_cliente) VALUES (?, ?)";
+            $stmtInsertCita = $conex->prepare($query_insert_cita);
+            $stmtInsertCita->bind_param("is", $id_form, $rut);
+            $stmtInsertCita->execute();
+            $stmtInsertCita->close();
+        }
+        $stmtVerificarRUT->close();
+
+        // Actualizar el horario a 'reservado' usando consulta preparada
+        $queryUpdateHorario = "UPDATE Horario SET estado = 'reservado' WHERE id_horario = ?";
+        $stmtUpdateHorario = $conex->prepare($queryUpdateHorario);
+        $stmtUpdateHorario->bind_param("i", $horario_id);
+        $stmtUpdateHorario->execute();
+        $stmtUpdateHorario->close();
+
+        // Configuración de correos
+        $correo_dueno = 'diegomarin939@gmail.com';
+        $asunto_cliente = "Cita Programada - Centro Técnico DC";
+        $asunto_dueno = "Nueva Cita Programada - Cliente: {$nombre} {$apellido}";
+
+        // Mensaje para el cliente
+        $mensaje_cliente = "
+            <h3>Estimado/a {$nombre} {$apellido},</h3>
+            <p>Gracias por agendar una cita con nosotros. <strong>CITA #{$id_form}.</strong></p>
+            <ul>
+                <li><strong>Servicio:</strong> {$servicio}</li>
+                <li><strong>Producto:</strong> {$producto}</li>
+                <li><strong>Fecha y hora de la cita:</strong> {$horario}</li>
+                <li><strong>Teléfono de contacto:</strong> {$telefono}</li>
+            </ul>
+            <p>Nos pondremos en contacto con usted. Le recomendamos <strong>registrarse</strong> para gestionar sus citas, acceder a nuestro chat en vivo y recibir notificaciones.</p>
+            <p>Saludos cordiales,<br>Centro Técnico DC</p>
+        ";
+
+        // Mensaje para el administrador
+        $mensaje_dueno = "
+            <h3>Notificación de nueva CITA #{$id_form} programada</h3>
+            <p>Se ha programado una cita con el cliente {$nombre} {$apellido}. <strong>CITA #{$id_form}.</strong></p>
+            <ul>
+                <li><strong>Servicio:</strong> {$servicio}</li>
+                <li><strong>Producto:</strong> {$producto}</li>
+                <li><strong>Fecha y hora:</strong> {$horario}</li>
+                <li><strong>Teléfono del cliente:</strong> {$telefono}</li>
+                <li><strong>Correo del cliente:</strong> {$correo}</li>
+            </ul>
+        ";
+
+        // Configuración de encabezados para correos en formato HTML
+        $headers = "From: Servicio Técnico <no-reply@doncarlos.com>\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+
+        // Enviar correos
+        mail($correo, $asunto_cliente, $mensaje_cliente, $headers);
+        mail($correo_dueno, $asunto_dueno, $mensaje_dueno, $headers);
+
+        // Confirmar la transacción
+        $conex->commit();
+        header('Location: cita_exitosa.html');
+    } else {
+        throw new Exception("Error al registrar la cita.");
+    }
+} catch (Exception $e) {
+    $conex->rollback();
+    $_SESSION['error'] = "Hubo un error al procesar su cita. Intente nuevamente.";
+    header('Location: cita_mal.html');
+} finally {
+    // Cerrar conexiones y liberar recursos
+    $stmtInsert->close();
+    $conex->close();
+}
 ?>

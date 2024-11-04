@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Verificar el cargo del usuario como cadena de texto
             if ($row['cargo'] === 'administrador') {
                 // Si el cargo es 'administrador', redirigir al dashboard de administrador
-                header('Location: ../dashboard/admin_dashboard.php');
+                header('Location: ../adminDash/admin_dashboard.php');
                 exit(); // Asegúrate de salir después de la redirección
             } elseif ($row['cargo'] === 'cliente') {
                 // Si el cargo es 'cliente', redirigir al dashboard de cliente

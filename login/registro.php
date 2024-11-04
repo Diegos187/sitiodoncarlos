@@ -56,16 +56,16 @@ session_start();
     <!-- Barra de navegación -->
     <header class="header-agendar">
         <div class="menu container">
-            <a href="index.html" class="logo">DC</a>
+            <a href="../index.html" class="logo">DC</a>
             <input type="checkbox" id="menu"/>
             <label for="menu">
                 <i class="bi bi-list"></i>
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="login.php">Iniciar Sesión</a></li>
-                    <li><a href="registro.php">Registrarse</a></li>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="./login.php">Iniciar Sesión</a></li>
+                    <li><a href="./registro.php">Registrarse</a></li>
                 </ul>
             </nav>
 
@@ -89,17 +89,17 @@ session_start();
         ?>
 
         <label for="rut">RUT (Sin puntos y con guión):</label>
-        <input type="text" name="rut" id="rut" placeholder="12345678-9" required>
+        <input type="text" name="rut" id="rut" placeholder="12345678-9" maxlength="10" required>
         <p id="rutError" class="error" style="display: none;">Por favor, ingresa un RUT válido (ej: 12345678-9).</p>
 
-        <label for="nombre">Nombre de usuario:</label>
-        <input type="text" name="nombre" id="nombre" placeholder="Ingresa tu nombre" required>
+        <label for="nombre">Nombre y apellido:</label>
+        <input type="text" name="nombre" id="nombre" placeholder="Ingresa tu nombre" maxlength="80" required>
 
         <label for="email">Correo:</label>
         <input type="email" name="email" id="email" placeholder="Ingresa tu correo" required>
         <p id="emailError" class="error" style="display: none;">Por favor, ingresa un correo válido.</p>
 
-        <label for="password">Contraseña:</label>
+        <label for="password">Contraseña (Mín. 8 caracteres):</label>
         <div class="password-container">
             <input type="password" name="password" id="password" placeholder="Crea una contraseña" required>
             <span class="eye-icon" onclick="togglePasswordVisibility('password')"><i class="bi bi-eye"></i></span>

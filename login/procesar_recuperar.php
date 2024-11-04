@@ -24,13 +24,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sss", $email, $token, $expira);
         $stmt->execute();
 
-        // Enviar el correo electrónico
-        $resetLink = "http://localhost/doncarlos/login/restablecer_contraseña.php?token=$token";
-        $subject = "Recuperación de Contraseña";
-        $message = "Hola,\n\nHaz clic en el siguiente enlace para restablecer tu contraseña:\n$resetLink\n\nEste enlace expirará en 1 hora.";
-        $headers = "From: no-reply@doncarlos.com";
+        // Configurar el enlace de restablecimiento de contraseña
+        $resetLink = "https://7dfa-190-100-89-42.ngrok-free.app/doncarlos/login/restablecer_contraseña.php?token=$token";
+        $asunto = "Recuperación de Contraseña";
+        $mensaje = "
+            <h3>Hola,</h3>
+            <p>Hemos recibido una solicitud para restablecer tu contraseña. Haz clic en el enlace a continuación para restablecer tu contraseña:</p>
+            <p><a href='$resetLink'>$resetLink</a></p>
+            <p><em>Este enlace expirará en 1 hora.</em></p>
+            <p>Si no solicitaste el cambio de contraseña, puedes ignorar este mensaje.</p>
+            <p>Gracias,<br>Equipo de Soporte de Centro Técnico DC</p>
+        ";
 
-        if (mail($email, $subject, $message, $headers)) {
+        // Configurar el encabezado del correo
+        $headers = "From: Servicio Técnico <no-reply@doncarlos.com>\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+
+        // Enviar el correo de notificación
+        if (mail($email, $asunto, $mensaje, $headers)) {
             $_SESSION['success'] = "Si el correo está registrado, te enviaremos un enlace de recuperación.";
         } else {
             $_SESSION['error'] = "Hubo un error al enviar el enlace de recuperación.";

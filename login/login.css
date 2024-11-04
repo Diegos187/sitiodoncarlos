@@ -38,7 +38,7 @@ body {
     justify-content: space-between;
     z-index: 1000; /* Para que esté por encima del contenido */
     padding: 20px;
-
+    background-color: #f4f4f4;
 }
 
 .menu .navbar ul li{
@@ -197,4 +197,76 @@ a:hover {
 
 .volver-btn:hover {
     background-color: #5a6268;
+}
+
+/* Estilos para dispositivos móviles y pantallas pequeñas */
+@media (max-width: 768px) {
+    .menu{
+        padding: 20px;
+    }
+    
+    .menu label {
+        display: initial;
+    }
+
+    .menu .navbar {
+        position: absolute;
+        top: 100%; /* Start the menu offscreen */
+        left: 0;
+        right: 0;
+        background-color: #FFFFFF;
+        display: none;
+        
+        animation: slideDown 0.3s ease-in-out forwards;
+      }
+      
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-100%); /* Start offscreen */
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0); /* Slide down to visible position */
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-100%); 
+      
+        }
+      }
+      
+      #menu:checked ~ .navbar {
+        display: initial;
+      }
+      
+    .menu .navbar ul li {
+        width: 100%;
+    }
+
+    form {
+        width: 90%; /* Ajustar el ancho del formulario */
+        padding: 40px; /* Ajustar el padding del formulario */
+    }
+
+    /* Ajustar los campos del formulario */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* Botones más grandes para pantallas pequeñas */
+    button, .volver-btn {
+        padding: 15px;
+        font-size: 18px;
+    }
 }

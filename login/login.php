@@ -16,6 +16,9 @@ if (isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="./login.css">
+        <!-- Para los iconos del sitio web -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <style>
         /* Estilos para el mensaje flotante */
         .mensaje-flotante {
@@ -99,10 +102,10 @@ if (isset($_SESSION['user_id'])) {
             mensajeFlotante.innerText = mensaje;
             mensajeFlotante.style.display = 'block';
 
-            // Ocultar el mensaje después de 5 segundos
+            // Ocultar el mensaje después de 7 segundos
             setTimeout(function() {
                 mensajeFlotante.style.display = 'none';
-            }, 5000);
+            }, 7000);
 
             <?php unset($_SESSION['success']); // Limpiar la sesión ?>
         <?php endif; ?>

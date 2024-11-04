@@ -17,13 +17,21 @@ if (isset($_POST['id_form']) && isset($_POST['estado'])) {
     $conex->begin_transaction();
 
     try {
-        // Actualizar el estado del presupuesto en la base de datos
-        $queryPresupuesto = "UPDATE Presupuesto SET estado = ? WHERE id_form = ?";
+        // Si el presupuesto es aceptado, actualizar todos los presupuestos previos a "rechazado"
+        if ($estado === 'aceptado') {
+            $queryUpdatePrevious = "UPDATE Presupuesto SET estado = 'rechazado' WHERE id_form = ? AND estado = 'aceptado'";
+            $stmtUpdatePrevious = $conex->prepare($queryUpdatePrevious);
+            $stmtUpdatePrevious->bind_param('i', $id_form);
+            $stmtUpdatePrevious->execute();
+        }
+
+        // Actualizar el estado del presupuesto seleccionado en la base de datos
+        $queryPresupuesto = "UPDATE Presupuesto SET estado = ? WHERE id_form = ? ORDER BY fecha_creacion DESC LIMIT 1";
         $stmtPresupuesto = $conex->prepare($queryPresupuesto);
         $stmtPresupuesto->bind_param('si', $estado, $id_form);
         $stmtPresupuesto->execute();
 
-        // Si el presupuesto es aceptado, actualizar el estado de la cita a 'en proceso'
+        // Si el presupuesto es aceptado, actualizar el estado de la cita a "en proceso"
         if ($estado === 'aceptado') {
             $queryCita = "UPDATE Formulario SET estado = 'en proceso' WHERE id_form = ?";
             $stmtCita = $conex->prepare($queryCita);
